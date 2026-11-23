@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Victoire Giroard — Portfolio Design Graphique</title>
+<meta name="description" content="Portfolio de Victoire Giroard, designer graphique : affiches, identités visuelles, packaging.">
+<meta name="theme-color" content="#FFF8EE">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/emoji/favicon.png">
+<link rel="preload" as="image" href="assets/emoji/victoire-paix.png">
+<link rel="preload" as="image" href="assets/emoji/victoire-clin.png">
+<link rel="preload" as="image" href="assets/emoji/victoire-idee.png">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/mandala.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+} }
+</script>
+</head>
+<body class="chargement">
+
+<!-- Écran d'entrée -->
+<div class="rideau" id="rideau" aria-hidden="true">
+  <img class="rideau-emoji" src="assets/emoji/victoire-idee.png" width="308" height="428" alt="">
+  <div class="rideau-mot"><span>P</span><span>O</span><span>R</span><span>T</span><span>F</span><span>O</span><span>L</span><span>I</span><span>O</span></div>
+  <p class="rideau-texte">on gonfle la boule…</p>
+</div>
+
+<div class="fond-pastel" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="curseur" id="curseur" aria-hidden="true"><span class="curseur-label"></span></div>
+
+<a class="evitement" href="#liste">Aller à la liste des projets</a>
+
+<!-- En-tête -->
+<header class="entete" id="entete">
+  <a href="#" class="entete-nom" id="entete-nom">Victoire Giroard <span>designer graphique · portfolio 2026</span></a>
+  <div class="vp-nav" id="vp-nav" aria-label="Navigation entre projets">
+    <button class="vp-fleche" id="vp-prec" aria-label="Projet précédent" data-curseur="avant">←</button>
+    <span class="vp-compte" id="vp-compte">01 / 09</span>
+    <button class="vp-fleche" id="vp-suiv" aria-label="Projet suivant" data-curseur="après">→</button>
+  </div>
+  <nav class="entete-nav">
+    <button id="btn-propos" class="btn-propos" aria-haspopup="dialog" aria-controls="discussion"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 5.5C4 4.1 5.1 3 6.5 3h11C18.9 3 20 4.1 20 5.5v8c0 1.4-1.1 2.5-2.5 2.5H11l-4.5 4v-4h0C5.1 16 4 14.9 4 13.5z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="8.5" cy="9.6" r="1.2" fill="currentColor"/><circle cx="12" cy="9.6" r="1.2" fill="currentColor"/><circle cx="15.5" cy="9.6" r="1.2" fill="currentColor"/></svg><span class="btn-propos-txt">à propos</span></button>
+    <button id="btn-liste" aria-expanded="false" aria-controls="liste">liste<span class="cache-mobile"> des projets</span></button>
+    <button id="btn-contact" aria-expanded="false" aria-controls="contact">contact</button>
+    <button class="son" id="son" aria-label="Couper le son" data-curseur="son">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path class="onde" d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5M18.5 6c2 1.6 3 3.6 3 6s-1 4.4-3 6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+    </button>
+  </nav>
+</header>
+
+<!-- Mascotte : Memoji de Victoire (3 expressions : clin, paix, idee — assets/emoji/), sert aussi de bouton accueil -->
+<button class="emoji" id="emoji" aria-label="Émoji de Victoire : à propos (depuis un projet : retour à l’accueil)" data-curseur="coucou">
+<span class="mj-ombre" aria-hidden="true"></span>
+<span class="memoji" data-expr="paix" aria-hidden="true"><span class="mj-flotte"><span class="mj-balance"><span class="mj-ressort">
+  <span class="mj-halo"></span><span class="mj-rayons"></span>
+  <img class="mj-img" data-e="clin" src="assets/emoji/victoire-clin.png" width="308" height="428" alt="" draggable="false">
+  <img class="mj-img" data-e="paix" src="assets/emoji/victoire-paix.png" width="308" height="428" alt="" draggable="false">
+  <img class="mj-img" data-e="idee" src="assets/emoji/victoire-idee.png" width="308" height="428" alt="" draggable="false">
+</span></span></span></span>
+</button>
+<p class="bulle" id="bulle" role="status" aria-live="polite"></p>
+
+<!-- =================== ACCUEIL : la boule et l'orbite =================== -->
+<main class="accueil" id="accueil">
+  <h1 class="sr-only">Victoire Giroard — portfolio de design graphique</h1>
+  <div class="mot-fond" aria-hidden="true">PORTFOLIO</div>
+
+  <div class="scene" id="scene">
+    <div class="ombre-boule" id="ombre-boule" aria-hidden="true"></div>
+    <canvas class="boule" id="boule" aria-hidden="true"></canvas>
+    <div class="boule-css" id="boule-css" hidden aria-hidden="true"></div>
+    <button class="boule-clavier" id="boule-clavier" aria-describedby="indice">Coller un sticker sur la boule</button>
+
+    <ul class="orbite" id="orbite" aria-label="Les 9 projets, en orbite autour de la boule"><!-- cartes fabriquées par contenu.js (content/projets.json) --></ul>
+  </div>
+
+  <p class="indice" id="indice"><span>clique sur la boule <br>pour coller un sticker !</span>
+    <svg viewBox="0 0 80 70" width="80" height="70" class="fleche" aria-hidden="true"><path d="M76 6 C 52 6, 22 22, 10 60 M 6.4 48.6 L 10 60 L 19.5 52.7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </p>
+  <nav class="index-projets" id="index-projets" aria-label="Index des 9 projets">
+    <p class="aide-orbite" id="aide-orbite">glisse, molette ou ← → : les projets tournent</p>
+    <p class="index-titre" id="index-titre" aria-live="polite">01 · Affiche de concert</p>
+    <div class="index-rangee"></div>
+  </nav>
+
+  <div class="barre-stickers" id="barre-stickers" role="toolbar" aria-label="Choisir le sticker à coller">
+    <button class="choix choix-auto actif" data-s="auto" aria-pressed="true" data-curseur="surprise"><span aria-hidden="true">✦</span><em>à tour<br>de rôle</em></button>
+    <!-- les stickers sont ajoutés ici depuis content/stickers.json -->
+    <span class="barre-sep" aria-hidden="true"></span>
+    <span class="compteur" aria-live="polite"><b id="compteur">0</b><span>/<span id="max">36</span></span></span>
+    <button class="decoller" id="decoller" data-curseur="oups">tout décoller <span aria-hidden="true">↺</span></button>
+  </div>
+  <p class="repli-message" id="repli-message" hidden>La 3D n'est pas disponible sur cet appareil : voici la version simple de la boule.</p>
+</main>
+
+<!-- Liste simple et accessible -->
+<section class="panneau liste" id="liste" hidden aria-labelledby="liste-titre" tabindex="-1">
+  <div class="panneau-tete"><h2 id="liste-titre">Les 9 projets</h2><button class="panneau-fermer" data-fermer aria-label="Fermer la liste">×</button></div>
+  <ol class="liste-projets"><!-- contenu.js --></ol>
+</section>
+
+<section class="panneau contact" id="contact" hidden aria-labelledby="contact-titre" tabindex="-1">
+  <div class="panneau-tete"><h2 id="contact-titre">On travaille ensemble ?</h2><button class="panneau-fermer" data-fermer aria-label="Fermer">×</button></div>
+  <div class="contact-liens" id="contact-liens"></div>
+</section>
+
+<!-- =================== CONVERSATION « À PROPOS » (contenu : content/conversation.json) =================== -->
+<div class="discussion" id="discussion" hidden>
+  <div class="disc-voile" id="disc-voile"></div>
+  <section class="disc-panneau" id="disc-panneau" role="dialog" aria-modal="true" aria-labelledby="disc-nom" aria-describedby="disc-aide">
+    <header class="disc-tete">
+      <span class="disc-avatar" id="disc-avatar"><span class="disc-popout" id="disc-popout"></span><span class="disc-en-ligne" aria-hidden="true"></span></span>
+      <div class="disc-qui">
+        <h2 id="disc-nom">Victoire Giroard</h2>
+        <p><span id="disc-statut">en ligne</span><span class="disc-compte" id="disc-compte" aria-live="polite"></span></p>
+      </div>
+      <button class="disc-fermer" id="disc-fermer" aria-label="Fermer la conversation">✕</button>
+    </header>
+    <p class="sr-only" id="disc-aide">Conversation de présentation. Chaque message de Victoire est un bouton : Entrée pour réagir. Échap pour fermer.</p>
+    <ol class="disc-fil" id="disc-fil" role="log" aria-live="polite" aria-label="Messages"></ol>
+    <div class="disc-reponses" id="disc-reponses" role="group" aria-label="Réponses rapides"></div>
+  </section>
+</div>
+
+<!-- =================== PAGES PROJET =================== -->
+<div class="vue-projet" id="vue-projet" hidden aria-label="Projet" tabindex="-1">
+  <div class="vp-progression" id="vp-progression"></div>
+
+<!-- les pages projet sont fabriquées ici par contenu.js (content/projets.json) -->
+
+  <footer class="vp-pied">
+    <button class="vp-suivant" id="vp-suivant" data-curseur="go">
+      <span class="vp-suivant-petit">projet suivant</span>
+      <span class="vp-suivant-titre" id="vp-suivant-titre">—</span>
+      <img id="vp-suivant-img" src="assets/vignettes/p02.webp" alt="">
+    </button>
+    <div class="vp-pied-bas">
+      <button class="retour" data-retour>↺ retour à la boule</button>
+      <span>Victoire Giroard — Design Graphique 2026</span>
+      <button class="lien" data-ouvrir-contact>contact</button>
+    </div>
+  </footer>
+</div>
+
+<div class="visionneuse" id="visionneuse" aria-hidden="true"><img alt=""><button aria-label="Fermer l'image">×</button></div>
+
+<!-- Memoji de Victoire : modèle copié pour l'avatar de la conversation et à côté de ses bulles -->
+<template id="tpl-memoji"><span class="memoji" data-expr="paix" aria-hidden="true"><span class="mj-flotte"><span class="mj-balance"><span class="mj-ressort">
+  <span class="mj-halo"></span><span class="mj-rayons"></span>
+  <img class="mj-img" data-e="clin" src="assets/emoji/victoire-clin.png" width="308" height="428" alt="" draggable="false">
+  <img class="mj-img" data-e="paix" src="assets/emoji/victoire-paix.png" width="308" height="428" alt="" draggable="false">
+  <img class="mj-img" data-e="idee" src="assets/emoji/victoire-idee.png" width="308" height="428" alt="" draggable="false">
+</span></span></span></span></template>
+
+<script src="sphere.js"></script>
+<!-- contenu.js lit les fichiers content/*.json, fabrique la page puis lance main.js -->
+<script src="contenu.js"></script>
+<script type="module">
+  // Three.js depuis le CDN (version fixée) — en cas d'échec, main.js passe en version simple
+  try {
+    const THREE = await import('three');
+    const { RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js');
+    window.__three = { THREE, RoomEnvironment };
+    window.dispatchEvent(new Event('three-pret'));
+  } catch (e) {
+    window.__threeErreur = e;
+    window.dispatchEvent(new Event('three-erreur'));
+  }
+</script>
+</body>
+</html>
