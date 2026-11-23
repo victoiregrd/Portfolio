@@ -1,0 +1,566 @@
+# Configuration de Pages CMS (https://app.pagescms.org) : les formulaires
+# qui permettent de modifier le site sans toucher au code.
+# Documentation : https://pagescms.org/docs/
+# Les lignes « &nom » / « *nom » réutilisent un même champ à plusieurs endroits.
+
+media:
+  input: assets
+  output: assets
+  rename: safe
+  categories: [image]
+
+content:
+
+  # ================================================================== PROJETS
+  - name: projets
+    label: Mes projets
+    description: "Glisse un projet (poignée à gauche) pour changer l'ordre autour de la boule. Pour ajouter un projet : bouton « Add » en bas, puis « Projet ». N'oublie pas d'enregistrer (Save)."
+    type: file
+    path: content/projets.json
+    format: json
+    fields:
+      - name: projets
+        label: Mes projets
+        type: block
+        blockKey: modele
+        list:
+          min: 1
+          collapsible:
+            collapsed: true
+            summary: "{index}. {titre}"
+        blocks:
+
+          # ---------------------------------------------- projet simple (pour tout nouveau projet)
+          - name: projet
+            label: Projet
+            fields:
+              - &titre
+                name: titre
+                label: Titre
+                description: Le nom du projet tel qu'il s'affiche.
+                type: string
+                required: true
+              - &type
+                name: sousTitre
+                label: Type ou client
+                description: "Une petite précision sous le titre, ex. « Affiche » ou « Bruno Mars »."
+                type: string
+              - &annee
+                name: annee
+                label: Année
+                description: "Facultatif, ex. 2026."
+                type: string
+              - &texte
+                name: texte
+                label: Texte
+                description: "Ta présentation du projet. Laisse une ligne vide entre deux paragraphes. Pour du gras : **mot**."
+                type: text
+              - &outils
+                name: outils
+                label: Logiciels
+                description: Un logiciel par ligne (Photoshop, Illustrator…). Facultatif.
+                type: string
+                list: true
+              - name: image
+                label: Image principale
+                description: Ta plus belle image. Elle sert aussi de vignette autour de la boule.
+                type: image
+                options: { path: assets/uploads }
+              - &galerie
+                name: galerie
+                label: Autres images
+                description: Ajoute autant d'images que tu veux, dans l'ordre d'affichage. La légende est facultative.
+                type: object
+                list:
+                  collapsible:
+                    collapsed: false
+                    summary: "Image {index} {legende}"
+                fields:
+                  - { name: image, label: Image, type: image, options: { path: assets/uploads } }
+                  - { name: legende, label: Légende (facultatif), type: string }
+                  - &alt { name: alt, label: Description, type: string, hidden: true }
+              - &couleur
+                name: couleur
+                label: Couleur (facultatif)
+                description: La couleur de la carte et du fond de la page.
+                type: select
+                default: lilas
+                options:
+                  values:
+                    - { value: rose, label: Rose }
+                    - { value: lilas, label: Lilas }
+                    - { value: ciel, label: Bleu ciel }
+                    - { value: menthe, label: Menthe }
+                    - { value: peche, label: Pêche }
+              - &phrase
+                name: phraseEmoji
+                label: Phrase de ton émoji (facultatif)
+                description: Ce que dit ton émoji quand on ouvre ce projet.
+                type: string
+              - &inverse
+                name: inverse
+                label: Image à gauche (facultatif)
+                description: Coche pour mettre l'image à gauche et le texte à droite.
+                type: boolean
+                default: false
+              - &id { name: id, label: Identifiant, type: string, hidden: true }
+
+          # ---------------------------------------------- affiche + en situation (Bruno Mars, Mario, Zimoun)
+          - name: classique
+            label: "Projet avec bouton « en situation »"
+            fields:
+              - *titre
+              - *type
+              - *annee
+              - *texte
+              - *outils
+              - name: image
+                label: Image principale
+                description: Ta plus belle image (l'affiche).
+                type: image
+                options: { path: assets/uploads }
+              - name: imageSituation
+                label: Image en situation
+                description: "Facultatif. Si elle est là, deux boutons permettent de passer d'une image à l'autre."
+                type: image
+                options: { path: assets/uploads }
+              - *galerie
+              - &vignette
+                name: vignette
+                label: Vignette (facultatif)
+                description: "L'image de la carte autour de la boule. Si tu n'en mets pas, l'image principale est utilisée."
+                type: image
+                options: { path: assets/uploads }
+              - *couleur
+              - *phrase
+              - { name: boutonImage, label: Nom du 1er bouton (facultatif), type: string, default: "L'affiche" }
+              - { name: boutonSituation, label: Nom du 2e bouton (facultatif), type: string, default: En situation }
+              - { name: portrait, label: Affiche verticale, description: Coche si l'affiche est plus haute que large., type: boolean, default: false }
+              - *inverse
+              - name: motFond
+                label: Mot qui défile en fond (facultatif)
+                description: "Comme ZIMOUN. Laisse vide pour ne rien afficher."
+                type: string
+              - { name: note, label: Petite note manuscrite (facultatif), type: string }
+              - { name: alt, label: Description, type: string, hidden: true }
+              - { name: altSituation, label: Description, type: string, hidden: true }
+              - *id
+
+          # ---------------------------------------------- avant / après (Vogue)
+          - name: avantApres
+            label: Projet avant / après (photo à glisser)
+            fields:
+              - *titre
+              - *type
+              - *annee
+              - *texte
+              - *outils
+              - name: avant
+                label: Photo avant
+                description: Les deux photos doivent avoir le même cadrage.
+                type: image
+                options: { path: assets/uploads }
+              - { name: apres, label: Photo après, type: image, options: { path: assets/uploads } }
+              - *galerie
+              - *vignette
+              - *couleur
+              - *phrase
+              - { name: note, label: Petite note manuscrite (facultatif), type: string }
+              - { name: etiquetteAvant, label: Mot sur la photo avant, type: string, default: avant }
+              - { name: etiquetteApres, label: Mot sur la photo après, type: string, default: après }
+              - *inverse
+              - { name: altAvant, label: Description, type: string, hidden: true }
+              - { name: altApres, label: Description, type: string, hidden: true }
+              - *id
+
+          # ---------------------------------------------- deux versions (Kaathoon)
+          - name: kaathoon
+            label: Projet en deux versions (V1 / V2)
+            fields:
+              - name: titre
+                label: Titre
+                description: Le nom du projet tel qu'il s'affiche (ex. Kaathoon).
+                type: string
+                required: true
+              - name: v1
+                label: Version 1
+                type: object
+                fields: &version
+                  - { name: titreCarte, label: Titre de la carte, description: "Ex. Kaathoon V1", type: string }
+                  - *type
+                  - *texte
+                  - *outils
+                  - { name: grille, label: Grande image, type: image, options: { path: assets/uploads } }
+                  - name: figures
+                    label: Images avec légende (côte à côte)
+                    type: object
+                    list: true
+                    fields:
+                      - { name: image, label: Image, type: image, options: { path: assets/uploads } }
+                      - { name: legende, label: Légende, description: "Pour du gras : **mot**.", type: text }
+                      - { name: etroite, label: Image haute et étroite, description: Coche pour la centrer., type: boolean, default: false }
+                      - *alt
+                  - name: bandes
+                    label: Images en bandeau, en dessous
+                    type: object
+                    list: true
+                    fields:
+                      - { name: image, label: Image, type: image, options: { path: assets/uploads } }
+                      - *alt
+                  - *vignette
+                  - name: couleur
+                    label: Couleur de la carte (facultatif)
+                    type: select
+                    options:
+                      values:
+                        - { value: rose, label: Rose }
+                        - { value: lilas, label: Lilas }
+                        - { value: ciel, label: Bleu ciel }
+                        - { value: menthe, label: Menthe }
+                        - { value: peche, label: Pêche }
+                  - *phrase
+                  - { name: bouton, label: Nom du bouton de cette version, type: string }
+                  - { name: altGrille, label: Description, type: string, hidden: true }
+                  - *id
+              - name: v2
+                label: Version 2
+                description: Si tu la vides, le projet n'a plus qu'une version.
+                type: object
+                fields: *version
+              - *id
+
+          # ---------------------------------------------- bulles (Klear)
+          - name: klear
+            label: Projet avec bulles qui montent
+            fields:
+              - *titre
+              - *type
+              - *annee
+              - *texte
+              - *outils
+              - { name: image, label: Image à côté du texte, type: image, options: { path: assets/uploads } }
+              - *galerie
+              - *vignette
+              - name: couleur
+                label: Couleur de la carte (facultatif)
+                type: select
+                options:
+                  values:
+                    - { value: rose, label: Rose }
+                    - { value: lilas, label: Lilas }
+                    - { value: ciel, label: Bleu ciel }
+                    - { value: menthe, label: Menthe }
+                    - { value: peche, label: Pêche }
+              - *phrase
+              - *inverse
+              - *alt
+              - *id
+
+          # ---------------------------------------------- étincelles (boîte d'allumettes)
+          - name: allumettes
+            label: Projet avec étincelles
+            fields:
+              - *titre
+              - *type
+              - *annee
+              - *texte
+              - *outils
+              - { name: image, label: Image à frotter (étincelles), type: image, options: { path: assets/uploads } }
+              - *galerie
+              - *vignette
+              - *couleur
+              - *phrase
+              - { name: note, label: Petite note manuscrite (facultatif), type: string }
+              - *inverse
+              - *alt
+              - *id
+
+          # ---------------------------------------------- saveurs (Aparté)
+          - name: aparte
+            label: Projet à saveurs (Aparté)
+            fields:
+              - *titre
+              - *type
+              - *annee
+              - *texte
+              - *outils
+              - { name: logo, label: Logo, type: image, options: { path: assets/uploads } }
+              - name: saveurs
+                label: Saveurs (3 au maximum)
+                type: object
+                list:
+                  max: 3
+                  collapsible:
+                    collapsed: true
+                    summary: "{nom}"
+                fields:
+                  - { name: nom, label: Nom de la saveur, type: string }
+                  - { name: tablette, label: Photo du produit, type: image, options: { path: assets/uploads } }
+                  - { name: patron, label: Patron du packaging, type: image, options: { path: assets/uploads } }
+                  - { name: couleur, label: Couleur de la pastille, type: string, hidden: true }
+                  - { name: altTablette, label: Description, type: string, hidden: true }
+                  - { name: altPatron, label: Description, type: string, hidden: true }
+              - name: publicite
+                label: Publicité (images côte à côte)
+                type: object
+                list: true
+                fields:
+                  - { name: image, label: Image, type: image, options: { path: assets/uploads } }
+                  - { name: legende, label: Légende (facultatif), type: string }
+                  - *alt
+              - name: papeterie
+                label: Papeterie (images côte à côte)
+                type: object
+                list: true
+                fields:
+                  - { name: image, label: Image, type: image, options: { path: assets/uploads } }
+                  - { name: legende, label: Légende (facultatif), type: string }
+                  - *alt
+              - *vignette
+              - name: couleur
+                label: Couleur de la carte (facultatif)
+                type: select
+                options:
+                  values:
+                    - { value: rose, label: Rose }
+                    - { value: lilas, label: Lilas }
+                    - { value: ciel, label: Bleu ciel }
+                    - { value: menthe, label: Menthe }
+                    - { value: peche, label: Pêche }
+              - *phrase
+              - { name: altLogo, label: Description, type: string, hidden: true }
+              - *id
+
+  # ================================================================== INFOS
+  - name: infos
+    label: Mes infos et mon contact
+    description: Ton nom, ton métier, tes coordonnées et les petites phrases de ton émoji.
+    type: file
+    path: content/infos.json
+    format: json
+    fields:
+      - { name: nom, label: Ton nom, type: string, required: true }
+      - name: metier
+        label: Ton métier
+        description: "Affiché en haut à gauche, sous ton nom (ex. designer graphique)."
+        type: string
+      - { name: annee, label: Année du portfolio, type: string }
+      - name: contact
+        label: Mon contact
+        description: Laisse une case vide pour ne pas l'afficher.
+        type: object
+        fields:
+          - { name: email, label: E-mail, type: string }
+          - name: instagram
+            label: Instagram
+            description: "Ton @pseudo, ou le lien de ton profil."
+            type: string
+          - name: linkedin
+            label: LinkedIn
+            description: "Le lien de ton profil (https://www.linkedin.com/in/…)."
+            type: string
+          - { name: titre, label: Titre du panneau contact, type: string }
+          - { name: texteSiVide, label: Texte affiché tant qu'il n'y a aucun contact, type: string }
+      - name: signature
+        label: Signature en bas des pages projet
+        description: "Ex. Victoire Giroard — Design Graphique 2026"
+        type: string
+      - name: titreOnglet
+        label: Titre dans l'onglet du navigateur et sur Google
+        type: string
+      - name: description
+        label: Phrase de présentation pour Google
+        type: text
+      - name: emoji
+        label: Petites phrases de ton émoji
+        type: object
+        fields:
+          - { name: accueil, label: Quand on arrive sur le site (ordinateur), type: string }
+          - { name: accueilMobile, label: "Quand on arrive sur le site (téléphone, court)", type: string }
+          - { name: retour, label: Quand on revient à la boule, type: string }
+          - { name: ennui, label: Quand le visiteur ne bouge plus (une au hasard), type: string, list: true }
+          - { name: bravo, label: Quand on colle des stickers (une au hasard), type: string, list: true }
+
+  # ================================================================== CONVERSATION
+  - name: conversation
+    label: Ma conversation « à propos »
+    description: La discussion qui s'ouvre quand on clique sur ton émoji.
+    type: file
+    path: content/conversation.json
+    format: json
+    fields:
+      - name: intro
+        label: Messages envoyés à l'ouverture (un par un)
+        description: "Pour écrire un message « à compléter », remplis sa case « Ton texte »."
+        type: block
+        blockKey: type
+        list:
+          collapsible:
+            collapsed: false
+            summary: "{index}. {texte}{legende}{aCompleter}{sticker}"
+        blocks: &messages
+          - name: texte
+            label: Bulle de texte
+            fields:
+              - { name: texte, label: Texte, type: text }
+          - name: aCompleter
+            label: Message à compléter
+            fields:
+              - name: texte
+                label: Ton texte
+                description: Tant que cette case est vide, ce message n'apparaît pas sur le site.
+                type: text
+              - { name: aCompleter, label: Ce qu'il faut écrire (aide), type: string }
+          - name: memoji
+            label: Ton Memoji animé
+            fields:
+              - name: memoji
+                label: Expression
+                type: select
+                default: clin
+                options:
+                  values:
+                    - { value: clin, label: Clin d'œil }
+                    - { value: paix, label: Signe de paix }
+                    - { value: idee, label: Idée (ampoule) }
+              - { name: legende, label: Légende, type: string }
+          - name: photo
+            label: Photo
+            fields:
+              - { name: photo, label: Photo, type: image, options: { path: assets/uploads } }
+              - { name: legende, label: Légende, type: string }
+          - name: sticker
+            label: Sticker
+            fields:
+              - name: sticker
+                label: Nom court du sticker
+                description: "piano, belier, gateau, disco ou avion (voir « Mes stickers »)."
+                type: string
+          - name: contact
+            label: Mes liens de contact
+            fields:
+              - name: aCompleter
+                label: Aide (si le contact est vide)
+                description: "Les liens viennent de « Mes infos et mon contact »."
+                type: string
+      - name: reponses
+        label: Boutons de réponse proposés au visiteur
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{libelle}"
+        fields:
+          - { name: libelle, label: Texte du bouton, type: string, required: true }
+          - name: messages
+            label: Ta réponse (messages envoyés un par un)
+            type: block
+            blockKey: type
+            list: true
+            blocks: *messages
+          - name: unique
+            label: Le bouton disparaît une fois utilisé
+            type: boolean
+            default: true
+          - name: action
+            label: Action en plus (facultatif)
+            type: select
+            options:
+              values:
+                - { value: projets, label: Fermer la conversation et faire tourner les projets }
+                - { value: contact, label: Montrer le contact }
+          - { name: id, label: Identifiant, type: string, hidden: true }
+      - { name: nom, label: Nom en haut de la conversation, type: string }
+      - { name: statut, label: "Statut sous le nom (ex. en ligne)", type: string }
+      - { name: contactVide, label: Texte montré si ton contact est vide, type: string }
+      - name: reactions
+        label: Réactions possibles sur tes bulles
+        description: Un emoji, ou le nom court d'un sticker.
+        type: object
+        list: true
+        fields:
+          - { name: emoji, label: Emoji, type: string }
+          - { name: sticker, label: Ou nom court d'un sticker, type: string }
+          - { name: nom, label: Nom (lu au survol), type: string }
+      - name: afficherACompleter
+        label: Montrer les messages encore à compléter
+        description: Laisse décoché sur le site en ligne (sinon les visiteurs voient tes notes en pointillés).
+        type: boolean
+        default: false
+
+  # ================================================================== STICKERS
+  - name: stickers
+    label: Mes stickers
+    description: Les stickers à coller sur la boule (8 au maximum).
+    type: file
+    path: content/stickers.json
+    format: json
+    fields:
+      - name: stickers
+        label: Mes stickers (dans l'ordre de la barre)
+        description: "Pour un nouveau sticker, ajoute une image PNG détourée (fond transparent, carrée)."
+        type: object
+        list:
+          max: 8
+          collapsible:
+            collapsed: true
+            summary: "{nom}"
+        fields:
+          - { name: nom, label: Nom (affiché au survol), type: string, required: true }
+          - name: image
+            label: Image du sticker (PNG détouré)
+            description: Remplace le dessin d'origine.
+            type: image
+            options: { path: assets/uploads }
+          - name: id
+            label: Nom court
+            description: "Sans espace ni accent (ex. disco). Sert dans la conversation."
+            type: string
+            required: true
+            pattern: { regex: "^[a-z0-9-]+$", message: "Lettres minuscules, chiffres et tirets seulement" }
+          - name: finition
+            label: Finition
+            type: select
+            default: brillant
+            options:
+              values:
+                - { value: brillant, label: Brillant }
+                - { value: holo, label: Holographique (reflets arc-en-ciel) }
+          - name: taille
+            label: Taille
+            description: "1 = normal, 0.8 = plus petit, 1.3 = plus grand"
+            type: number
+            default: 1
+            options: { min: 0.5, max: 1.6 }
+          - name: son
+            label: Son quand on le colle
+            type: select
+            default: pop
+            options:
+              values:
+                - { value: piano, label: Note de piano }
+                - { value: boing, label: Boing }
+                - { value: pop, label: Pop }
+                - { value: disco, label: Petites cloches }
+                - { value: avion, label: Souffle }
+          - { name: svg, label: Dessin d'origine, type: text, hidden: true }
+      - name: maxStickers
+        label: Nombre maximum de stickers sur la boule
+        description: Au-delà, le plus ancien se décolle.
+        type: number
+        default: 36
+        options: { min: 5, max: 80 }
+      - name: couleurs
+        label: Couleurs du site
+        type: object
+        hidden: true
+        fields:
+          - { name: fond, label: Fond, type: string }
+          - { name: lilas, label: Lilas, type: string }
+          - { name: rose, label: Rose, type: string }
+          - { name: menthe, label: Menthe, type: string }
+          - { name: ciel, label: Bleu ciel, type: string }
+          - { name: peche, label: Pêche, type: string }
+          - { name: texte, label: Texte, type: string }
+          - { name: sphere, label: Boule, type: string }
+          - { name: reflet, label: Reflet de la boule, type: string }
