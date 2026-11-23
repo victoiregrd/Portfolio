@@ -1,0 +1,35 @@
+{
+  "nom": "Victoire Giroard",
+  "metier": "designer graphique",
+  "annee": "2026",
+  "signature": "Victoire Giroard — Design Graphique 2026",
+  "titreOnglet": "Victoire Giroard — Portfolio Design Graphique",
+  "description": "Portfolio de Victoire Giroard, designer graphique : affiches, identités visuelles, packaging.",
+  "contact": {
+    "titre": "On travaille ensemble ?",
+    "email": "",
+    "instagram": "",
+    "linkedin": "",
+    "texteSiVide": "Les coordonnées arrivent bientôt ✿"
+  },
+  "emoji": {
+    "accueil": "coucou, moi c’est Victoire ✿",
+    "accueilMobile": "coucou ✿",
+    "retour": "re-coucou !",
+    "ennui": [
+      "psst… clique sur la boule !",
+      "coucou ! ✿",
+      "tu veux voir mes projets ?"
+    ],
+    "bravo": [
+      "trop mignon !",
+      "encore un !",
+      "joli ✿",
+      "parfait !",
+      "ta-dam !",
+      "j'adore !",
+      "pile au bon endroit",
+      "collé-serré !"
+    ]
+  }
+}

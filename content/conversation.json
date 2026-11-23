@@ -1,0 +1,143 @@
+{
+  "afficherACompleter": false,
+  "nom": "Victoire Giroard",
+  "statut": "en ligne",
+  "intro": [
+    {
+      "type": "texte",
+      "texte": "coucou 👋"
+    },
+    {
+      "type": "texte",
+      "texte": "moi c’est Victoire Giroard, je fais du design graphique ✿"
+    },
+    {
+      "type": "memoji",
+      "memoji": "clin",
+      "legende": "c’est moi !"
+    },
+    {
+      "type": "texte",
+      "texte": "dans ce portfolio, il y a 9 projets : des affiches, des identités visuelles, du packaging, de la typo et de la retouche photo."
+    },
+    {
+      "type": "aCompleter",
+      "aCompleter": "Ta formation : école, diplôme, année (ex. « je suis en … à … »)"
+    },
+    {
+      "type": "aCompleter",
+      "aCompleter": "Ce que tu aimes faire : ton univers, ce qui t’inspire, tes passions"
+    },
+    {
+      "type": "sticker",
+      "sticker": "disco"
+    },
+    {
+      "type": "texte",
+      "texte": "pose-moi une question en dessous, ou clique sur une de mes bulles pour réagir 💬"
+    }
+  ],
+  "reponses": [
+    {
+      "id": "quoi",
+      "libelle": "tu fais quoi ?",
+      "unique": true,
+      "messages": [
+        {
+          "type": "texte",
+          "texte": "des affiches : un concert de Bruno Mars, une carte bancaire de collection Mario, une expo sur l’artiste Zimoun"
+        },
+        {
+          "type": "texte",
+          "texte": "des identités visuelles et du packaging : la sauce Kaathoon (en deux versions !), la gourde Klear, le chocolat Aparté et une boîte d’allumettes"
+        },
+        {
+          "type": "texte",
+          "texte": "et de la retouche photo, comme ma couverture façon Vogue 📸"
+        },
+        {
+          "type": "aCompleter",
+          "aCompleter": "Ton projet préféré et pourquoi"
+        }
+      ]
+    },
+    {
+      "id": "logiciels",
+      "libelle": "tes logiciels ?",
+      "unique": true,
+      "messages": [
+        {
+          "type": "texte",
+          "texte": "Photoshop, Illustrator, InDesign et Procreate 🎨"
+        },
+        {
+          "type": "texte",
+          "texte": "Photoshop pour la retouche et les visuels, Illustrator pour les logos et les patrons de packaging, InDesign pour la mise en page"
+        },
+        {
+          "type": "texte",
+          "texte": "et Procreate, que j’ai utilisé sur Klear et Aparté ✍️"
+        }
+      ]
+    },
+    {
+      "id": "projets",
+      "libelle": "voir tes projets",
+      "unique": false,
+      "action": "projets",
+      "messages": [
+        {
+          "type": "texte",
+          "texte": "c’est parti, je te les fais tourner autour de la boule ✦"
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "libelle": "te contacter",
+      "unique": false,
+      "action": "contact",
+      "messages": [
+        {
+          "type": "texte",
+          "texte": "avec plaisir ! tu peux m’écrire ici :"
+        },
+        {
+          "type": "contact",
+          "aCompleter": "Tes coordonnées : e-mail, Instagram, LinkedIn (formulaire « Infos et contact »)"
+        }
+      ]
+    }
+  ],
+  "contactVide": "mes coordonnées arrivent très bientôt ✿",
+  "reactions": [
+    {
+      "emoji": "❤️",
+      "nom": "j’adore"
+    },
+    {
+      "emoji": "😂",
+      "nom": "drôle"
+    },
+    {
+      "emoji": "😮",
+      "nom": "waouh"
+    },
+    {
+      "emoji": "🔥",
+      "nom": "au top"
+    },
+    {
+      "emoji": "👏",
+      "nom": "bravo"
+    },
+    {
+      "sticker": "belier",
+      "nom": "Bélier"
+    },
+    {
+      "sticker": "disco",
+      "nom": "boule disco"
+    }
+  ]
+}

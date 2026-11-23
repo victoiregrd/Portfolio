@@ -1,0 +1,11 @@
+# fichiers du Mac
+.DS_Store
+._*
+# fichiers d'origine non utilisés par le site (gardés seulement sur l'ordinateur, pas publiés)
+assets/img/victoire.jpg
+assets/img/mandala.png
+assets/emoji/*-original.jpeg
+assets/emoji-victoire.svg
+assets/emoji-victoire-tete.svg
+# copie de travail du guide (régénérée par generer_guide.py)
+outils-guide/guide.html

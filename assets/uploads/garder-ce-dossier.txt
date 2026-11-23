@@ -1,0 +1,2 @@
+Ce dossier recoit les images que tu ajoutes dans Pages CMS.
+Ne le supprime pas.

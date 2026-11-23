@@ -331,6 +331,168 @@ content:
               - { name: altLogo, label: Description, type: string, hidden: true }
               - *id
 
+  # ================================================================== APPARENCE
+  - name: apparence
+    label: Apparence (couleurs, polices)
+    description: "Choisis une ambiance toute prête, puis change une couleur précise si tu veux. Une case de couleur vide = la couleur de l'ambiance. Un code faux est ignoré : le site garde sa couleur d'origine. N'oublie pas d'enregistrer (Save)."
+    type: file
+    path: content/apparence.json
+    format: json
+    fields:
+      - name: ambiance
+        label: Ambiance
+        description: "Un jeu de couleurs complet. Pastel = le site d'origine."
+        type: select
+        default: pastel
+        options:
+          values:
+            - { value: pastel, label: "Pastel (d'origine) : crème, lilas, rose" }
+            - { value: bordeaux, label: "Bordeaux : crème et bordeaux, comme mon portfolio PDF" }
+            - { value: sorbet, label: "Sorbet : pastels plus vifs" }
+            - { value: nature, label: "Nature : verts doux" }
+            - { value: ocean, label: "Océan : bleus doux" }
+      - name: couleurs
+        label: Mes couleurs (facultatif)
+        description: "Pour changer une seule couleur : écris son code (ex. #C8B6FF). Tu peux copier un code depuis Photoshop, Illustrator ou coolors.co. Efface la case pour revenir à l'ambiance."
+        type: object
+        fields:
+          - name: fond
+            label: "Fond du site"
+            description: "Code couleur, ex. #FFF8EE. Vide = couleur de l'ambiance choisie (pastel : #FFF8EE). Garde un fond clair : les textes sont foncés."
+            type: string
+            pattern: &codeCouleur
+              regex: '^\s*#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})?\s*$'
+              message: "Un code couleur comme #C8B6FF (dièse + 6 lettres ou chiffres), ou rien"
+          - name: texte
+            label: "Texte principal"
+            description: "Code couleur, ex. #3B2A4A. Vide = couleur de l'ambiance choisie (pastel : #3B2A4A). Garde une couleur foncée pour que ce soit lisible."
+            type: string
+            pattern: *codeCouleur
+          - name: texteDoux
+            label: "Texte secondaire (petites lignes)"
+            description: "Code couleur, ex. #5B4A6E. Vide = couleur de l'ambiance choisie (pastel : #5B4A6E)."
+            type: string
+            pattern: *codeCouleur
+          - name: accent
+            label: "Accent 1 (numéros des projets, mots en italique, contours)"
+            description: "Code couleur, ex. #6B4BA6. Vide = couleur de l'ambiance choisie (pastel : #6B4BA6)."
+            type: string
+            pattern: *codeCouleur
+          - name: accent2
+            label: "Accent 2 (notes manuscrites, petites flèches)"
+            description: "Code couleur, ex. #A8466E. Vide = couleur de l'ambiance choisie (pastel : #A8466E)."
+            type: string
+            pattern: *codeCouleur
+          - name: boule
+            label: "Boule en gelée"
+            description: "Code couleur, ex. #CDB4F6. Vide = couleur de l'ambiance choisie (pastel : #CDB4F6)."
+            type: string
+            pattern: *codeCouleur
+          - name: refletBoule
+            label: "Reflet de la boule"
+            description: "Code couleur, ex. #FFC8DD. Vide = couleur de l'ambiance choisie (pastel : #FFC8DD)."
+            type: string
+            pattern: *codeCouleur
+          - name: lilas
+            label: "Couleur douce « lilas »"
+            description: "Code couleur, ex. #CDB4F6. Vide = couleur de l'ambiance choisie (pastel : #CDB4F6). Sert aux cartes des projets réglés sur Lilas, aux survols et aux taches du fond."
+            type: string
+            pattern: *codeCouleur
+          - name: rose
+            label: "Couleur douce « rose »"
+            description: "Code couleur, ex. #FFC8DD. Vide = couleur de l'ambiance choisie (pastel : #FFC8DD). Cartes réglées sur Rose, survols, taches du fond."
+            type: string
+            pattern: *codeCouleur
+          - name: menthe
+            label: "Couleur douce « menthe »"
+            description: "Code couleur, ex. #BDE0C8. Vide = couleur de l'ambiance choisie (pastel : #BDE0C8). Cartes réglées sur Menthe, survols, taches du fond."
+            type: string
+            pattern: *codeCouleur
+          - name: ciel
+            label: "Couleur douce « bleu ciel »"
+            description: "Code couleur, ex. #BDE0FE. Vide = couleur de l'ambiance choisie (pastel : #BDE0FE). Cartes réglées sur Bleu ciel, taches du fond."
+            type: string
+            pattern: *codeCouleur
+          - name: peche
+            label: "Couleur douce « pêche »"
+            description: "Code couleur, ex. #FFD6A5. Vide = couleur de l'ambiance choisie (pastel : #FFD6A5). Cartes réglées sur Pêche, taches du fond."
+            type: string
+            pattern: *codeCouleur
+          - name: panneaux
+            label: "Bulles et panneaux (conversation, menus)"
+            description: "Code couleur, ex. #FFFFFF. Vide = couleur de l'ambiance choisie (pastel : #FFFFFF)."
+            type: string
+            pattern: *codeCouleur
+          - name: boutons
+            label: "Fond des boutons"
+            description: "Code couleur, ex. #FFFFFF. Vide = couleur de l'ambiance choisie (pastel : #FFFFFF). Il est un peu transparent."
+            type: string
+            pattern: *codeCouleur
+      - name: polices
+        label: Mes polices
+        description: "Des polices choisies pour bien rendre sur le site (téléphone compris)."
+        type: object
+        fields:
+          - name: titres
+            label: "Grands titres (PORTFOLIO, titres des projets)"
+            description: "Police en capitales, grasse."
+            type: select
+            default: anton
+            options:
+              values:
+                - { value: anton, label: "Anton (d'origine)" }
+                - { value: bebas, label: "Bebas Neue" }
+                - { value: oswald, label: "Oswald" }
+                - { value: league, label: "League Gothic" }
+                - { value: lilita, label: "Lilita One (ronde)" }
+                - { value: abril, label: "Abril Fatface (à empattements)" }
+          - name: elegante
+            label: "Police élégante (ton nom, mots en italique)"
+            description: "Police à empattements, utilisée surtout en italique."
+            type: select
+            default: instrument
+            options:
+              values:
+                - { value: instrument, label: "Instrument Serif (d'origine)" }
+                - { value: playfair, label: "Playfair Display" }
+                - { value: dmserif, label: "DM Serif Display" }
+                - { value: fraunces, label: "Fraunces" }
+                - { value: cormorant, label: "Cormorant Garamond" }
+          - name: texte
+            label: "Texte courant"
+            description: "Les paragraphes, les boutons, les menus."
+            type: select
+            default: dmsans
+            options:
+              values:
+                - { value: dmsans, label: "DM Sans (d'origine)" }
+                - { value: inter, label: "Inter" }
+                - { value: poppins, label: "Poppins" }
+                - { value: nunito, label: "Nunito (arrondie)" }
+                - { value: worksans, label: "Work Sans" }
+                - { value: spacegrotesk, label: "Space Grotesk" }
+                - { value: manrope, label: "Manrope" }
+                - { value: outfit, label: "Outfit" }
+          - name: manuscrite
+            label: "Écriture à la main (petites notes)"
+            description: "Les notes manuscrites et les légendes."
+            type: select
+            default: caveat
+            options:
+              values:
+                - { value: caveat, label: "Caveat (d'origine)" }
+                - { value: kalam, label: "Kalam" }
+                - { value: patrick, label: "Patrick Hand" }
+                - { value: gochi, label: "Gochi Hand" }
+                - { value: shadows, label: "Shadows Into Light" }
+                - { value: indie, label: "Indie Flower" }
+      - name: fond
+        label: Fond du site
+        type: object
+        fields:
+          - { name: taches, label: Taches de couleur floues dans le fond, type: boolean, default: true }
+          - { name: grain, label: Grain papier, type: boolean, default: true }
+
   # ================================================================== INFOS
   - name: infos
     label: Mes infos et mon contact
@@ -550,17 +712,3 @@ content:
         type: number
         default: 36
         options: { min: 5, max: 80 }
-      - name: couleurs
-        label: Couleurs du site
-        type: object
-        hidden: true
-        fields:
-          - { name: fond, label: Fond, type: string }
-          - { name: lilas, label: Lilas, type: string }
-          - { name: rose, label: Rose, type: string }
-          - { name: menthe, label: Menthe, type: string }
-          - { name: ciel, label: Bleu ciel, type: string }
-          - { name: peche, label: Pêche, type: string }
-          - { name: texte, label: Texte, type: string }
-          - { name: sphere, label: Boule, type: string }
-          - { name: reflet, label: Reflet de la boule, type: string }

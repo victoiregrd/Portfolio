@@ -1,0 +1,29 @@
+{
+  "ambiance": "pastel",
+  "couleurs": {
+    "fond": "",
+    "texte": "",
+    "texteDoux": "",
+    "accent": "",
+    "accent2": "",
+    "boule": "",
+    "refletBoule": "",
+    "lilas": "",
+    "rose": "",
+    "menthe": "",
+    "ciel": "",
+    "peche": "",
+    "panneaux": "",
+    "boutons": ""
+  },
+  "polices": {
+    "titres": "anton",
+    "elegante": "instrument",
+    "texte": "dmsans",
+    "manuscrite": "caveat"
+  },
+  "fond": {
+    "taches": true,
+    "grain": true
+  }
+}

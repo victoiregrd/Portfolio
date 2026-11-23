@@ -2,8 +2,10 @@
    CONTENU DU SITE — lu dans les fichiers du dossier content/ :
    - content/infos.json        nom, métier, contact, petites phrases de l'émoji
    - content/projets.json      les projets (ordre de l'orbite, textes, images)
-   - content/stickers.json     les stickers de la boule et les couleurs du site
+   - content/stickers.json     les stickers de la boule
    - content/conversation.json la conversation « à propos »
+   - content/apparence.json    ambiance, couleurs, polices, fond (facultatif :
+                               une valeur vide ou invalide garde le rendu d'origine)
    Ces fichiers se modifient dans Pages CMS (app.pagescms.org), sans
    toucher au code. Ce script fabrique les cartes, la liste et les pages
    projet à partir de ces données, puis lance main.js.
@@ -33,6 +35,104 @@ const chemin = (p) => {
 };
 const slug = (s) => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
   .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
+
+/* ---------- apparence (content/apparence.json) ----------
+   Chaque valeur est vérifiée : vide, absente ou invalide = valeur de l'ambiance choisie,
+   et une ambiance inconnue = « pastel » (le rendu d'origine). Rien ne peut casser la page. */
+const AMBIANCES = {
+  pastel:   { fond: '#FFF8EE', texte: '#3B2A4A', texteDoux: '#5B4A6E', accent: '#6B4BA6', accent2: '#A8466E', lilas: '#CDB4F6', rose: '#FFC8DD', menthe: '#BDE0C8', ciel: '#BDE0FE', peche: '#FFD6A5', boule: '#CDB4F6', refletBoule: '#FFC8DD', panneaux: '#FFFFFF', boutons: '#FFFFFF' },
+  bordeaux: { fond: '#F7EFE4', texte: '#5E1A1D', texteDoux: '#7A3A3D', accent: '#8E2B31', accent2: '#A3473B', lilas: '#E8C7C5', rose: '#F2B8B5', menthe: '#D9E2C4', ciel: '#D3DEE6', peche: '#F3D2A8', boule: '#8E2B31', refletBoule: '#F2B8B5', panneaux: '#FFFDF9', boutons: '#FFFFFF' },
+  sorbet:   { fond: '#FFFBF3', texte: '#2A1F3D', texteDoux: '#4E4166', accent: '#5B33C6', accent2: '#B42A6B', lilas: '#BBA2FF', rose: '#FF9FC8', menthe: '#8EE0B2', ciel: '#8DCBFF', peche: '#FFBE76', boule: '#FF9FC8', refletBoule: '#BBA2FF', panneaux: '#FFFFFF', boutons: '#FFFFFF' },
+  nature:   { fond: '#F4F8F1', texte: '#233D2E', texteDoux: '#47604F', accent: '#2E6F4E', accent2: '#9A4F2C', lilas: '#CFE0C3', rose: '#F3D3C4', menthe: '#B5DCC3', ciel: '#C6DFE6', peche: '#F2DDB0', boule: '#B5DCC3', refletBoule: '#F3D3C4', panneaux: '#FFFFFF', boutons: '#FFFFFF' },
+  ocean:    { fond: '#F3F7FC', texte: '#1F2E4A', texteDoux: '#44506B', accent: '#2B4FA6', accent2: '#A3466E', lilas: '#C9D2F7', rose: '#F5CFE0', menthe: '#BFE3DA', ciel: '#B7D8F7', peche: '#F7DCC0', boule: '#B7D8F7', refletBoule: '#C9D2F7', panneaux: '#FFFFFF', boutons: '#FFFFFF' },
+};
+// nom dans apparence.json -> variable CSS de style.css
+const VARS_COULEURS = { fond: '--fond', texte: '--prune', texteDoux: '--prune-doux', accent: '--lilas-fonce', accent2: '--rose-fonce',
+  lilas: '--lilas', rose: '--rose', menthe: '--menthe', ciel: '--ciel', peche: '--peche', panneaux: '--blanc', boutons: '--bouton' };
+// polices proposées (liste fermée, Google Fonts) : [nom CSS, paramètres Google Fonts (null = déjà chargée par index.html)]
+const POLICES = {
+  titres: { _var: '--titre', _repli: 'Impact, sans-serif', anton: ['Anton', null], bebas: ['Bebas Neue', 'Bebas+Neue'],
+    oswald: ['Oswald', 'Oswald:wght@600'], league: ['League Gothic', 'League+Gothic'], lilita: ['Lilita One', 'Lilita+One'],
+    abril: ['Abril Fatface', 'Abril+Fatface'] },
+  elegante: { _var: '--serif', _repli: 'Georgia, serif', instrument: ['Instrument Serif', null], playfair: ['Playfair Display', 'Playfair+Display:ital@0;1'],
+    dmserif: ['DM Serif Display', 'DM+Serif+Display:ital@0;1'], fraunces: ['Fraunces', 'Fraunces:ital@0;1'],
+    cormorant: ['Cormorant Garamond', 'Cormorant+Garamond:ital,wght@0,500;1,500'] },
+  texte: { _var: '--texte', _repli: 'system-ui, sans-serif', dmsans: ['DM Sans', null], inter: ['Inter', 'Inter:wght@400;500;700'],
+    poppins: ['Poppins', 'Poppins:wght@400;500;700'], nunito: ['Nunito', 'Nunito:wght@400;500;700'], worksans: ['Work Sans', 'Work+Sans:wght@400;500;700'],
+    spacegrotesk: ['Space Grotesk', 'Space+Grotesk:wght@400;500;700'], manrope: ['Manrope', 'Manrope:wght@400;500;700'], outfit: ['Outfit', 'Outfit:wght@400;500;700'] },
+  manuscrite: { _var: '--main', _repli: 'cursive', caveat: ['Caveat', null], kalam: ['Kalam', 'Kalam:wght@400;700'], patrick: ['Patrick Hand', 'Patrick+Hand'],
+    gochi: ['Gochi Hand', 'Gochi+Hand'], shadows: ['Shadows Into Light', 'Shadows+Into+Light'], indie: ['Indie Flower', 'Indie+Flower'] },
+};
+// code couleur accepté : #abc, #aabbcc, avec ou sans # (sinon null)
+const couleurValide = (c) => {
+  const v = String(c == null ? '' : c).trim().replace(/^#?/, '#');
+  if (/^#[0-9a-f]{3}$/i.test(v)) return ('#' + v[1] + v[1] + v[2] + v[2] + v[3] + v[3]).toUpperCase();
+  return /^#[0-9a-f]{6}$/i.test(v) ? v.toUpperCase() : null;
+};
+let policesPretes = Promise.resolve();
+let titresPerso = false;
+// une police de titre plus large qu'Anton : le grand mot PORTFOLIO du fond est réduit pour tenir dans l'écran
+function ajusterMotFond() {
+  const m = document.querySelector('.mot-fond');
+  if (!m || !titresPerso) return;
+  m.style.fontSize = '';
+  const w = m.getBoundingClientRect().width, max = window.innerWidth * 0.94;
+  if (w > max) m.style.fontSize = `calc(min(23vw, 40vh) * ${(max / w).toFixed(3)})`;
+}
+function appliquerApparence(A) {
+  try {
+    A = A && typeof A === 'object' ? A : {};
+    const nomAmb = Object.prototype.hasOwnProperty.call(AMBIANCES, A.ambiance) ? A.ambiance : 'pastel';
+    const amb = AMBIANCES[nomAmb], perso = A.couleurs && typeof A.couleurs === 'object' ? A.couleurs : {};
+    const C = {};
+    for (const k in amb) C[k] = couleurValide(perso[k]) || amb[k];
+    const racine = document.documentElement.style;
+    for (const k in VARS_COULEURS) racine.setProperty(VARS_COULEURS[k], C[k]);
+    // fond des pages projet : teintes d'origine tant que rien n'a changé, sinon mélange couleur douce + fond
+    const P = AMBIANCES.pastel;
+    for (const t of TEINTES) {
+      if (C[t] !== P[t] || C.fond !== P.fond) racine.setProperty('--fp-' + t, `color-mix(in srgb,var(--${t}) 28%,var(--fond))`);
+      else racine.removeProperty('--fp-' + t);
+    }
+    const tc = document.querySelector('meta[name="theme-color"]');
+    if (tc) tc.content = C.fond;
+    // couleurs lues par main.js (boule 3D, confettis)
+    window.COULEURS = { fond: C.fond, texte: C.texte, lilas: C.lilas, rose: C.rose, menthe: C.menthe, ciel: C.ciel, peche: C.peche,
+      sphere: C.boule, reflet: C.refletBoule };
+    // fond : taches de couleur et grain papier (cochés par défaut)
+    const F = A.fond && typeof A.fond === 'object' ? A.fond : {};
+    document.body.classList.toggle('sans-taches', F.taches === false);
+    document.body.classList.toggle('sans-grain', F.grain === false);
+    // polices : seules celles de la liste ; les nouvelles sont chargées depuis Google Fonts
+    const choix = A.polices && typeof A.polices === 'object' ? A.polices : {};
+    const familles = [], noms = [];
+    for (const role in POLICES) {
+      const liste_ = POLICES[role], v = choix[role];
+      if (typeof v !== 'string' || v[0] === '_' || !Object.prototype.hasOwnProperty.call(liste_, v)) continue;
+      const [nomCss, google] = liste_[v];
+      if (google) { familles.push('family=' + google); noms.push(nomCss); }
+      racine.setProperty(liste_._var, `'${nomCss}', ${liste_._repli}`);
+      if (role === 'titres' && v !== 'anton') { titresPerso = true; document.body.classList.add('titres-perso'); }
+    }
+    if (familles.length) {
+      const l = document.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = `https://fonts.googleapis.com/css2?${familles.join('&')}&display=swap`;
+      document.head.appendChild(l);
+      // on attend les nouvelles polices (1,5 s au plus) avant de mesurer la page dans main.js
+      policesPretes = new Promise((ok) => {
+        const fin = () => ok();
+        setTimeout(fin, 1500);
+        l.onload = () => Promise.all(noms.map((n) => document.fonts.load(`16px "${n}"`).catch(() => {}))).then(fin, fin);
+        l.onerror = fin;
+      });
+    }
+  } catch (e) {
+    console.warn('Apparence ignorée :', e);
+    const P = AMBIANCES.pastel;
+    window.COULEURS = { fond: P.fond, texte: P.texte, lilas: P.lilas, rose: P.rose, menthe: P.menthe, ciel: P.ciel, peche: P.peche, sphere: P.boule, reflet: P.refletBoule };
+  }
+}
 
 async function lire(nom) {
   // no-cache : le navigateur revérifie le fichier à chaque visite (les modifications de Victoire apparaissent tout de suite)
@@ -304,8 +404,7 @@ function construire(D) {
   const infos = D.infos || {}, contact = infos.contact || {}, st = D.stickers || {}, conv = D.conversation || {};
   const nom = infos.nom || 'Victoire Giroard';
 
-  // données lues par main.js (mêmes noms qu'avant : COULEURS, STICKERS, CONTACT, CONVERSATION)
-  window.COULEURS = Object.assign({}, st.couleurs || {});
+  // données lues par main.js (mêmes noms qu'avant : STICKERS, CONTACT, CONVERSATION ; COULEURS vient de l'apparence)
   window.MAX_STICKERS = Number(st.maxStickers) || 36;
   window.STICKERS = liste(st.stickers).filter((s) => s && s.id && (s.image || s.svg)).map((s) => ({
     id: String(s.id), nom: s.nom || String(s.id), finition: s.finition === 'holo' ? 'holo' : 'brillant',
@@ -364,8 +463,22 @@ function lancerMain() {
   document.body.appendChild(s);
 }
 
-Promise.all(FICHIERS.map(lire))
-  .then((v) => { construire(Object.fromEntries(FICHIERS.map((n, i) => [n, v[i]]))); lancerMain(); })
+// apparence d'abord (facultative : fichier absent ou illisible = rendu d'origine), pour éviter un éclair des anciennes couleurs
+const apparence = fetch('content/apparence.json', { cache: 'no-cache' })
+  .then((r) => (r.ok ? r.json() : {})).catch(() => ({}))
+  .then(appliquerApparence);
+
+Promise.all([...FICHIERS.map(lire), apparence])
+  .then((v) => { construire(Object.fromEntries(FICHIERS.map((n, i) => [n, v[i]]))); return policesPretes; })
+  .then(() => {
+    ajusterMotFond();
+    if (titresPerso) {
+      let att = 0;
+      window.addEventListener('resize', () => { cancelAnimationFrame(att); att = requestAnimationFrame(ajusterMotFond); });
+      document.fonts.ready.then(ajusterMotFond);
+    }
+    lancerMain();
+  })
   .catch((e) => {
     console.error('Contenu illisible :', e);
     const t = document.querySelector('.rideau-texte');
