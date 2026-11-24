@@ -4,7 +4,8 @@
 Google lit d'abord index.html tel quel (sans JavaScript) : ce script y écrit le titre,
 la description, les balises de partage, les données structurées (JSON-LD), le nom en
 en-tête et la liste des projets, à partir de content/infos.json et content/projets.json.
-Il met aussi à jour sitemap.xml. Lancé automatiquement par
+Il fait de même pour l'en-tête de contact.html (titre, description, partage, JSON-LD
+ContactPage) et met à jour sitemap.xml (accueil + page contact). Lancé automatiquement par
 .github/workflows/referencement.yml à chaque modification de content/ (Pages CMS).
 
 Sans dépendance (Python 3 standard). En cas de problème, il s'arrête sans rien écrire :
@@ -20,6 +21,7 @@ import unicodedata
 from pathlib import Path
 
 URL = 'https://victoiregrd.github.io/Portfolio/'
+URL_CONTACT = URL + 'contact.html'
 IMAGE_PARTAGE = URL + 'assets/partage.jpg'
 IMAGE_PORTRAIT = URL + 'assets/emoji/victoire-paix.png'
 
@@ -122,6 +124,10 @@ def main():
     reseaux = [u for u in (lien_contact(contact.get('instagram'), 'https://www.instagram.com/'),
                            lien_contact(contact.get('linkedin'), 'https://www.linkedin.com/in/')) if u]
 
+    moyens = [m for m, v in (('e-mail', contact.get('email')), ('LinkedIn', contact.get('linkedin')),
+                             ('Instagram', contact.get('instagram')), ('téléphone', contact.get('telephone')))
+              if isinstance(v, (str, int, float)) and str(v).strip()]
+
     # données structurées : la page de profil de Victoire (Person) et le site (WebSite)
     personne = {'@type': 'Person', '@id': URL + '#personne', 'name': nom,
                 'jobTitle': metier[:1].upper() + metier[1:], 'url': URL, 'image': IMAGE_PORTRAIT,
@@ -178,28 +184,76 @@ def main():
     t = remplacer(t, r'(<ul class="orbite" id="orbite" aria-label=")[^"]*(")', f'Les {nb_txt}, en orbite autour de la boule', 'orbite')
     t = remplacer(t, r'(<nav class="index-projets" id="index-projets" aria-label=")[^"]*(")', f'Index des {nb_txt}', 'index')
 
+    # page contact : seulement son en-tête (le reste est lu dans content/infos.json par la page elle-même).
+    # Fichier absent ou sans repères seo:debut / seo:fin : on la laisse telle quelle, sans bloquer l'accueil.
+    fichier_c = racine / 'contact.html'
+    avant_c = t_c = fichier_c.read_text(encoding='utf-8') if fichier_c.exists() else ''
+    etat_c = 'absente'
+    if avant_c:
+        titre_c = f'Contact — {nom}'
+        if moyens:
+            liste_m = moyens[0] if len(moyens) == 1 else ', '.join(moyens[:-1]) + ' et ' + moyens[-1]
+            description_c = f'Contacter {nom}, {metier} : {liste_m}. Clique sur une adresse pour la copier.'
+        else:
+            description_c = f'Page contact de {nom}, {metier} : les coordonnées arrivent bientôt.'
+        ld_c = {'@context': 'https://schema.org', '@graph': [
+            {'@type': 'ContactPage', '@id': URL_CONTACT + '#page', 'url': URL_CONTACT, 'name': titre_c,
+             'description': description_c, 'inLanguage': 'fr-FR', 'isPartOf': {'@id': URL + '#site'},
+             'about': {'@id': URL + '#personne'}, 'mainEntity': {'@id': URL + '#personne'},
+             'primaryImageOfPage': IMAGE_PARTAGE},
+            personne]}
+        ld_c_txt = json.dumps(ld_c, ensure_ascii=False, indent=1).replace('</', '<\\/')
+        tete_c = f'''
+<title>{esc(titre_c)}</title>
+<meta name="description" content="{esc(description_c)}">
+<link rel="canonical" href="{URL_CONTACT}">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="{esc(nom)}">
+<meta property="og:url" content="{URL_CONTACT}">
+<meta property="og:title" content="{esc(titre_c)}">
+<meta property="og:description" content="{esc(description_c)}">
+<meta property="og:image" content="{IMAGE_PARTAGE}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{esc(alt_partage)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{esc(titre_c)}">
+<meta name="twitter:description" content="{esc(description_c)}">
+<meta name="twitter:image" content="{IMAGE_PARTAGE}">
+<meta name="twitter:image:alt" content="{esc(alt_partage)}">
+<script type="application/ld+json">
+{ld_c_txt}
+</script>
+'''
+        t_c, n = re.subn(r'(<!-- seo:debut[^>]*-->).*?(<!-- seo:fin -->)', lambda m: m.group(1) + tete_c + m.group(2),
+                         avant_c, count=1, flags=re.S)
+        etat_c = 'sans repères seo (laissée telle quelle)' if n != 1 else ('mise à jour' if t_c != avant_c else 'inchangée')
+
+    # sitemap : une entrée par page ; chaque date ne change que si sa page change (pas de commit inutile pour un sticker)
     plan = racine / 'sitemap.xml'
     ancien_plan = plan.read_text(encoding='utf-8') if plan.exists() else ''
-    date = re.search(r'<lastmod>([^<]+)</lastmod>', ancien_plan)
-    # la date ne change que si la page change (pas de commit inutile pour un sticker)
-    if t != avant or not date:
-        date = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
-    else:
-        date = date.group(1)
-    nouveau_plan = f'''<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    dates = dict(re.findall(r'<loc>([^<]+)</loc>\s*<lastmod>([^<]+)</lastmod>', ancien_plan))
+    aujourdhui = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
+    pages = [(URL, t != avant)] + ([(URL_CONTACT, t_c != avant_c)] if avant_c else [])
+    entrees_plan = ''.join(f'''
   <url>
-    <loc>{URL}</loc>
-    <lastmod>{date}</lastmod>
-  </url>
+    <loc>{u}</loc>
+    <lastmod>{aujourdhui if change or u not in dates else dates[u]}</lastmod>
+  </url>''' for u, change in pages)
+    nouveau_plan = f'''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{entrees_plan}
 </urlset>
 '''
     if t != avant:
         fichier.write_text(t, encoding='utf-8')
+    if t_c != avant_c:
+        fichier_c.write_text(t_c, encoding='utf-8')
     if nouveau_plan != ancien_plan:
         plan.write_text(nouveau_plan, encoding='utf-8')
     print(f'{nom} · {nb_txt} · réseaux : {len(reseaux)} · index.html {"mis à jour" if t != avant else "inchangé"}'
-          f' · sitemap {"mis à jour" if nouveau_plan != ancien_plan else "inchangé"}')
+          f' · contact.html {etat_c} · sitemap {"mis à jour" if nouveau_plan != ancien_plan else "inchangé"}')
 
 
 if __name__ == '__main__':

@@ -508,20 +508,35 @@ content:
         type: string
       - { name: annee, label: Année du portfolio, type: string }
       - name: contact
-        label: Mon contact
-        description: Laisse une case vide pour ne pas l'afficher.
+        label: Mon contact et ma page contact
+        description: "Tout s'affiche sur ta page contact (bouton « contact » du site). Laisse une case vide pour ne pas l'afficher : chaque encadré n'apparaît que si sa case est remplie."
         type: object
         fields:
           - { name: email, label: E-mail, type: string }
-          - name: instagram
-            label: Instagram
-            description: "Ton @pseudo, ou le lien de ton profil."
-            type: string
           - name: linkedin
             label: LinkedIn
             description: "Le lien de ton profil (https://www.linkedin.com/in/…)."
             type: string
-          - { name: titre, label: Titre du panneau contact, type: string }
+          - name: instagram
+            label: Instagram
+            description: "Ton @pseudo, ou le lien de ton profil."
+            type: string
+          - name: telephone
+            label: Téléphone (facultatif)
+            description: "Attention : le numéro sera visible par tout le monde sur internet. Laisse vide pour ne pas l'afficher."
+            type: string
+          - name: titre
+            label: Petite question en haut de la page contact
+            description: "Ex. Prêt·e à travailler ensemble ?"
+            type: string
+          - name: grandTitre
+            label: Grand titre de la page contact
+            description: "Ex. Écris-moi"
+            type: string
+          - name: bandeau
+            label: Texte du bandeau qui défile
+            description: "Sépare tes phrases par ✦ (ex. Prête à rejoindre votre équipe ✦ En recherche d'alternance). Il est répété tout seul."
+            type: string
           - { name: texteSiVide, label: Texte affiché tant qu'il n'y a aucun contact, type: string }
       - name: signature
         label: Signature en bas des pages projet

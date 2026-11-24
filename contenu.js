@@ -420,7 +420,8 @@ function construire(D) {
       image: s.image ? chemin(s.image) : '', svg: typeof s.svg === 'string' ? s.svg : '',
     };
   });
-  window.CONTACT = { email: (contact.email || '').trim(), instagram: (contact.instagram || '').trim(), linkedin: (contact.linkedin || '').trim() };
+  const champ = (v) => (typeof v === 'string' || typeof v === 'number' ? String(v).trim() : '');
+  window.CONTACT = { email: champ(contact.email), instagram: champ(contact.instagram), linkedin: champ(contact.linkedin), telephone: champ(contact.telephone) };
   window.CONVERSATION = Object.assign({ intro: [], reponses: [], reactions: [] }, conv, {
     afficherACompleter: conv.afficherACompleter === true,
     reactions: liste(conv.reactions).filter((r) => r && (r.emoji || r.sticker)),
@@ -446,7 +447,6 @@ function construire(D) {
   document.getElementById('entete-nom').innerHTML = `${esc(nom)} <span>${esc(meta)}</span>`;
   if (infos.description) document.getElementById('presentation').textContent = infos.description;
   document.querySelector('.vp-pied-bas span').textContent = infos.signature || nom;
-  if (contact.titre) document.getElementById('contact-titre').textContent = contact.titre;
   const nbTxt = `${NB} projet${NB > 1 ? 's' : ''}`;
   document.getElementById('orbite').setAttribute('aria-label', `Les ${nbTxt}, en orbite autour de la boule`);
   document.getElementById('index-projets').setAttribute('aria-label', `Index des ${nbTxt}`);

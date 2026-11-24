@@ -82,8 +82,8 @@ body.curseur-ok .curseur{display:grid}
 .entete-nom{font-family:var(--serif);font-style:italic;font-size:26px;line-height:1.05;text-decoration:none;display:flex;flex-direction:column}
 .entete-nom span{font-family:var(--texte);font-style:normal;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--prune-doux)}
 .entete-nav{display:flex;align-items:center;gap:8px}
-.entete-nav > button:not(.son){font-size:14px;font-weight:700;letter-spacing:.04em;padding:9px 16px;border-radius:99px;background:color-mix(in srgb,var(--bouton) 70%,transparent);box-shadow:0 0 0 1.5px var(--prune);transition:background .3s,transform .4s var(--ressort)}
-.entete-nav > button:not(.son):hover,.entete-nav > button[aria-expanded="true"]{background:var(--lilas);transform:rotate(-3deg)}
+.entete-nav > button:not(.son),.entete-nav > a{font-size:14px;font-weight:700;letter-spacing:.04em;padding:9px 16px;border-radius:99px;background:color-mix(in srgb,var(--bouton) 70%,transparent);box-shadow:0 0 0 1.5px var(--prune);transition:background .3s,transform .4s var(--ressort)}
+.entete-nav > button:not(.son):hover,.entete-nav > a:hover,.entete-nav > button[aria-expanded="true"]{background:var(--lilas);transform:rotate(-3deg)}
 .son{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:color-mix(in srgb,var(--bouton) 70%,transparent);box-shadow:0 0 0 1.5px var(--prune)}
 .son.muet .onde{opacity:.15}
 .vp-nav{display:none;align-items:center;gap:6px;font-family:var(--titre);font-size:20px;letter-spacing:.04em}
@@ -232,7 +232,7 @@ body.en-projet .emoji .memoji[data-expr=idee]{translate:0 25%}
 .particule.coeur{border-radius:0;clip-path:path('M5 9C2 7 0 5 0 3 0 1 1.5 0 3 0c1 0 1.7.6 2 1.3C5.3.6 6 0 7 0c1.5 0 3 1 3 3 0 2-2 4-5 6z')}
 .onomatopee{position:fixed;z-index:91;left:0;top:0;pointer-events:none;font-family:var(--main);font-weight:700;font-size:30px;color:var(--lilas-fonce);white-space:nowrap;text-shadow:0 2px 0 #fff}
 
-/* ---------- Panneaux (liste, contact) ---------- */
+/* ---------- Panneau (liste des projets) ---------- */
 .panneau{position:fixed;z-index:70;top:74px;right:clamp(12px,3vw,36px);width:min(440px,calc(100vw - 24px));max-height:calc(100svh - 96px);overflow:auto;padding:20px 22px 24px;border-radius:24px;
   background:var(--blanc);box-shadow:0 0 0 1.5px var(--prune),0 24px 50px rgba(59,42,74,.2);transform-origin:90% 0;animation:panneau .45s var(--ressort)}
 @keyframes panneau{from{opacity:0;transform:scale(.85) translateY(-10px)}}
@@ -245,10 +245,6 @@ body.en-projet .emoji .memoji[data-expr=idee]{translate:0 25%}
 .liste-projets .nom{font-weight:700}
 .liste-projets .tag{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--prune-doux)}
 .liste-projets a:hover .num,.liste-projets a:focus-visible .num{color:var(--prune)}
-.contact-liens{display:flex;flex-wrap:wrap;gap:10px}
-.contact-liens a,.contact-liens p{padding:12px 20px;border-radius:99px;box-shadow:0 0 0 1.5px var(--prune);text-decoration:none;font-weight:700;transition:background .3s,transform .4s var(--ressort)}
-.contact-liens a:hover{background:var(--menthe);transform:rotate(-3deg)}
-.contact-liens p{box-shadow:none;padding:0;font-family:var(--main);font-size:24px;font-weight:700;color:var(--prune-doux)}
 
 /* ---------- Vue projet ---------- */
 .vue-projet{position:fixed;inset:0;z-index:40;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;background:var(--fond-projet,var(--fond));
@@ -390,11 +386,12 @@ body.titres-perso .projet-titre{hyphens:auto;-webkit-hyphens:auto}
 .vp-suivant img{grid-row:1/3;grid-column:2;width:clamp(80px,10vw,140px);aspect-ratio:4/5;object-fit:cover;border-radius:12px;transform:rotate(6deg);box-shadow:0 0 0 1.5px var(--prune);transition:transform .5s var(--ressort)}
 .vp-suivant:hover img{transform:rotate(-4deg) scale(1.08)}
 .vp-pied-bas{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:34px;font-size:13px;color:var(--prune-doux)}
-.retour,.lien{font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:10px 16px;border-radius:99px;box-shadow:0 0 0 1.5px var(--prune);color:var(--prune);background:color-mix(in srgb,var(--bouton) 70%,transparent);transition:background .3s}
+.retour,.lien{text-decoration:none;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:10px 16px;border-radius:99px;box-shadow:0 0 0 1.5px var(--prune);color:var(--prune);background:color-mix(in srgb,var(--bouton) 70%,transparent);transition:background .3s}
 .retour:hover,.lien:hover{background:var(--menthe)}
 
 /* ---------- Conversation « à propos » ---------- */
-.btn-propos{display:inline-flex;align-items:center;gap:7px}
+.btn-propos,.btn-contact{display:inline-flex;align-items:center;gap:7px}
+.btn-contact{text-decoration:none;color:inherit}
 .discussion{position:fixed;inset:0;z-index:58}
 .disc-voile{position:absolute;inset:0;background:rgba(59,42,74,.24)}
 body.disc-ouverte .emoji{z-index:59}
@@ -486,7 +483,7 @@ body.en-projet .disc-panneau{bottom:auto;top:84px;height:min(640px,calc(100svh -
   .entete-nom span{display:none}
   .cache-mobile{display:none}
   .entete-nav{gap:6px}
-  .entete-nav > button:not(.son){padding:8px 12px;font-size:13px}
+  .entete-nav > button:not(.son),.entete-nav > a{padding:8px 12px;font-size:13px}
   .son{width:34px;height:34px}
   body.en-projet .entete{padding-left:70px}
   body.en-projet .entete-nom,body.en-projet #btn-contact{display:none}
@@ -514,8 +511,8 @@ body.en-projet .disc-panneau{bottom:auto;top:84px;height:min(640px,calc(100svh -
   .indice span br{display:none}
   .repli-message{white-space:normal;width:calc(100vw - 32px);text-align:center;top:auto;bottom:150px}
   .liste-projets .tag{display:none}
-  .btn-propos-txt,#btn-contact{display:none}
-  .entete-nav > button.btn-propos{width:34px;height:34px;padding:0;justify-content:center;border-radius:50%}
+  .btn-propos-txt,.btn-contact-txt{display:none}
+  .entete-nav > button.btn-propos,.entete-nav > a.btn-contact{width:34px;height:34px;padding:0;justify-content:center;border-radius:50%}
   .entete-nom{font-size:19px}
   .disc-panneau,body.en-projet .disc-panneau{left:0;top:0;bottom:0;width:100%;height:100%;border-radius:0;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
   body.disc-ouverte .emoji{z-index:55}
@@ -554,3 +551,11 @@ body.en-projet .disc-panneau{bottom:auto;top:84px;height:min(640px,calc(100svh -
 @media (max-width:700px){.index-rangee.nombreux{flex-wrap:wrap;justify-content:center;width:calc(100vw - 40px)}}
 /* avant / après : l'image ne doit pas partir en glisser-déposer natif (sinon le curseur se bloque au 1er mouvement) */
 .avant-apres img{pointer-events:none;-webkit-user-drag:none;user-select:none}
+
+/* très petits téléphones (360 px…) : l'en-tête garde ses 4 boutons sur une ligne */
+@media (max-width:380px){
+  .entete{gap:6px}
+  .entete-nom{font-size:16px}
+  .entete-nav{gap:4px}
+  .entete-nav > button:not(.son):not(.btn-propos){padding:8px 10px}
+}

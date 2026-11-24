@@ -2,78 +2,194 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Adapte la page aux écrans de téléphone -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- seo:debut : recopié depuis content/infos.json par .github/seo/generer.py -->
 <title>Contact — Victoire Giroard</title>
-<style>
-  :root {
-    --fond: #ffeffc;
-    --lilas: #d9c8f2;
-    --rose: #f6c9dc;
-    --menthe: #bfe8d2;
-    --texte: #2b2433;
+<meta name="description" content="Contacter Victoire Giroard, designer graphique : e-mail, LinkedIn et téléphone. Clique sur une adresse pour la copier.">
+<link rel="canonical" href="https://victoiregrd.github.io/Portfolio/contact.html">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Victoire Giroard">
+<meta property="og:url" content="https://victoiregrd.github.io/Portfolio/contact.html">
+<meta property="og:title" content="Contact — Victoire Giroard">
+<meta property="og:description" content="Contacter Victoire Giroard, designer graphique : e-mail, LinkedIn et téléphone. Clique sur une adresse pour la copier.">
+<meta property="og:image" content="https://victoiregrd.github.io/Portfolio/assets/partage.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Victoire Giroard, designer graphique : portfolio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contact — Victoire Giroard">
+<meta name="twitter:description" content="Contacter Victoire Giroard, designer graphique : e-mail, LinkedIn et téléphone. Clique sur une adresse pour la copier.">
+<meta name="twitter:image" content="https://victoiregrd.github.io/Portfolio/assets/partage.jpg">
+<meta name="twitter:image:alt" content="Victoire Giroard, designer graphique : portfolio">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "ContactPage",
+   "@id": "https://victoiregrd.github.io/Portfolio/contact.html#page",
+   "url": "https://victoiregrd.github.io/Portfolio/contact.html",
+   "name": "Contact — Victoire Giroard",
+   "description": "Contacter Victoire Giroard, designer graphique : e-mail, LinkedIn et téléphone. Clique sur une adresse pour la copier.",
+   "inLanguage": "fr-FR",
+   "isPartOf": {
+    "@id": "https://victoiregrd.github.io/Portfolio/#site"
+   },
+   "about": {
+    "@id": "https://victoiregrd.github.io/Portfolio/#personne"
+   },
+   "mainEntity": {
+    "@id": "https://victoiregrd.github.io/Portfolio/#personne"
+   },
+   "primaryImageOfPage": "https://victoiregrd.github.io/Portfolio/assets/partage.jpg"
+  },
+  {
+   "@type": "Person",
+   "@id": "https://victoiregrd.github.io/Portfolio/#personne",
+   "name": "Victoire Giroard",
+   "jobTitle": "Designer graphique",
+   "url": "https://victoiregrd.github.io/Portfolio/",
+   "image": "https://victoiregrd.github.io/Portfolio/assets/emoji/victoire-paix.png",
+   "knowsAbout": [
+    "Design graphique",
+    "Affiche",
+    "Identité visuelle",
+    "Packaging"
+   ],
+   "sameAs": [
+    "https://www.linkedin.com/in/victoiregiroard"
+   ]
   }
+ ]
+}
+</script>
+<!-- seo:fin -->
+<meta name="theme-color" content="#ffeffc">
+<link rel="icon" type="image/png" sizes="96x96" href="assets/emoji/favicon-96.png">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/emoji/favicon.png">
+<link rel="apple-touch-icon" href="assets/emoji/apple-touch-icon.png">
+
+<!--
+  PAGE CONTACT
+  Les textes et les coordonnées viennent de content/infos.json
+  (Pages CMS › « Mes infos et mon contact ») : rien à changer ici.
+  Un encadré n'apparaît que si la case correspondante est remplie.
+-->
+<style>
+  /* ============ COULEURS (modifie-les ici, elles changent partout) ============ */
+  :root {
+    --fond: #ffeffc;    /* fond de la page (rose très pâle) */
+    --lilas: #d9c8f2;   /* bandeau qui défile */
+    --rose: #f6c9dc;    /* encadré quand on le survole */
+    --menthe: #bfe8d2;  /* encadré une fois copié */
+    --texte: #2b2433;   /* texte et contours */
+  }
+
+  /* ============ BASE DE LA PAGE ============ */
   * { box-sizing: border-box; }
   html, body { margin: 0; min-height: 100%; }
   body {
     background: var(--fond);
     color: var(--texte);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    display: flex; flex-direction: column;
-    min-height: 100vh;
-    overflow-x: hidden;
+    display: flex; flex-direction: column;   /* en-tête, contenu, pied de page empilés */
+    min-height: 100vh; min-height: 100svh;
+    overflow-x: hidden;                      /* évite le défilement horizontal du bandeau */
+    -webkit-font-smoothing: antialiased;
   }
+  ::selection { background: var(--lilas); }
+  .sr-only { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-  header { display: flex; justify-content: space-between; align-items: center; padding: 20px 32px; }
-  header a { color: inherit; text-decoration: none; font-weight: 600; }
-  header a:hover { text-decoration: underline; }
+  /* ============ EN-TÊTE (liens de retour) ============ */
+  header { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 32px; }
+  header a { color: inherit; text-decoration: none; font-weight: 600; border-radius: 6px; }
+  header a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  a:focus-visible { outline: 3px solid var(--texte); outline-offset: 4px; }
 
+  /* ============ CONTENU CENTRAL ============ */
   main {
-    flex: 1;
+    flex: 1;                                  /* prend toute la place disponible */
     display: flex; flex-direction: column; justify-content: center;
     padding: 24px 32px 48px;
     max-width: 880px; width: 100%; margin: 0 auto;
   }
   .question { font-size: clamp(1.1rem, 2.5vw, 1.4rem); font-weight: 700; margin: 0 0 12px; }
 
+  /* ============ BANDEAU QUI DÉFILE ============ */
   .bandeau {
-    margin: 0 -32px 32px; padding: 14px 0;
+    /* d'un bord de l'écran à l'autre, même quand le contenu est centré sur un grand écran */
+    margin: 0 calc(50% - 50vw) 32px; padding: 14px 0;
     background: var(--lilas);
     border-block: 2px solid var(--texte);
     overflow: hidden; white-space: nowrap;
   }
   .bandeau div {
     display: inline-block;
-    font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 800; text-transform: uppercase;
-    animation: defile 18s linear infinite;
+    font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 800; text-transform: uppercase; /* tout en majuscules */
+    animation: defile var(--duree, 18s) linear infinite;    /* 18 s = vitesse (plus grand = plus lent) */
+    will-change: transform;
   }
   @keyframes defile { to { transform: translateX(-50%); } }
 
-  h1 { font-size: clamp(2.6rem, 9vw, 5.5rem); line-height: 1; margin: 0 0 32px; letter-spacing: -.02em; }
+  /* ============ GRAND TITRE (+ Memoji de Victoire) ============ */
+  .titre { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 0 0 36px; }
+  h1 { font-size: clamp(2.6rem, 9vw, 5.5rem); line-height: 1; margin: 0; letter-spacing: -.02em; }
+  .memoji { width: clamp(64px, 11vw, 112px); height: auto; flex: none; transform: rotate(6deg); transform-origin: 50% 100%; user-select: none; }
+  .memoji.hop { animation: hop .5s cubic-bezier(.3, 1.6, .5, 1); }
+  @keyframes hop { 40% { transform: translateY(-14px) rotate(-6deg) scale(1.06); } }
 
-  /* L'adresse e-mail est elle-même le bouton */
+  /* ============ ENCADRÉS CLIQUABLES (mail, LinkedIn, téléphone) ============ */
+  .liste { display: flex; flex-direction: column; gap: 30px; }
+  .carte { position: relative; }
+  /* l'adresse elle-même est le bouton : un clic la copie */
   .adresse {
     display: block; width: 100%;
     font: inherit; font-weight: 700; text-align: left; color: var(--texte);
     font-size: clamp(1rem, 3.4vw, 1.6rem);
-    word-break: break-all;
+    word-break: break-all;                    /* les longs liens passent à la ligne sur mobile */
     background: #fff;
     border: 2px solid var(--texte); border-radius: 20px;
     padding: 22px 24px;
-    box-shadow: 6px 6px 0 var(--texte);
+    box-shadow: 6px 6px 0 var(--texte);       /* ombre décalée pleine */
     cursor: pointer;
     transition: transform .12s ease, box-shadow .12s ease, background .2s ease;
+    -webkit-tap-highlight-color: transparent;
   }
   .adresse:hover { background: var(--rose); transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--texte); }
   .adresse:active { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--texte); }
   .adresse:focus-visible { outline: 3px solid var(--texte); outline-offset: 4px; }
   .adresse.copie { background: var(--menthe); }
 
-  .liste { display: flex; flex-direction: column; gap: 22px; }
+  /* petite étiquette sur le bord de l'encadré : écrire, ouvrir, appeler */
+  .action {
+    position: absolute; top: 0; right: 20px; transform: translateY(-50%);
+    font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--texte); text-decoration: none;
+    background: var(--lilas);
+    border: 2px solid var(--texte); border-radius: 99px;
+    padding: 5px 12px;
+    box-shadow: 3px 3px 0 var(--texte);
+    transition: background .2s ease, box-shadow .12s ease, transform .12s ease;
+  }
+  .action:hover { background: var(--rose); }
+  .action:active { transform: translate(3px, calc(-50% + 3px)); box-shadow: 0 0 0 var(--texte); }
+
+  /* tant qu'aucune coordonnée n'est remplie */
+  .vide {
+    margin: 0; padding: 22px 24px;
+    border: 2px dashed var(--texte); border-radius: 20px;
+    font-size: clamp(1rem, 3.4vw, 1.4rem); font-weight: 700;
+  }
+
   .aide { margin: 24px 4px 0; font-size: .95rem; opacity: .7; min-height: 1.4em; }
+  .aide.ok { opacity: 1; font-weight: 700; }
 
   footer { padding: 20px 32px; font-size: .85rem; opacity: .7; }
 
-  /* Sticker collé au clic */
+  /* ============ STICKER COLLÉ AU CLIC ============ */
   .sticker {
     position: fixed; z-index: 10;
     width: 0; height: 0;
@@ -90,12 +206,13 @@
       drop-shadow(0 5px 7px rgba(43, 36, 51, .3));
     animation: colle .35s cubic-bezier(.3, 1.6, .5, 1) both;
   }
+  .sticker.part .pastille { animation: decolle .3s ease-in both; }
   .pastille .emoji { display: block; font-size: 120px; line-height: 1; }
   .pastille .legende {
     position: absolute; left: 50%; top: 58%;
     transform: translate(-50%, -50%) rotate(-6deg);
-    background: #fff; color: #2b2433;
-    border: 3px solid #2b2433; border-radius: 10px;
+    background: #fff; color: var(--texte);
+    border: 3px solid var(--texte); border-radius: 10px;
     padding: 4px 12px;
     font-family: "Comic Sans MS", "Marker Felt", "Chalkboard SE", cursive, sans-serif;
     font-size: 22px; font-weight: 700; line-height: 1.1;
@@ -104,52 +221,70 @@
     from { transform: translate(-50%, -50%) rotate(calc(var(--rot) - 25deg)) scale(2.2); opacity: 0; }
     to   { transform: translate(-50%, -50%) rotate(var(--rot)) scale(1); opacity: 1; }
   }
+  @keyframes decolle {
+    to { transform: translate(-50%, -70%) rotate(calc(var(--rot) + 12deg)) scale(.6); opacity: 0; }
+  }
 
+  /* ============ TÉLÉPHONE ============ */
+  @media (max-width: 600px) {
+    header { padding: 16px 20px; }
+    main { padding: 12px 20px 40px; }
+    footer { padding: 16px 20px; }
+    .titre { margin-bottom: 30px; }
+    .adresse { padding: 20px 18px; }
+    .action { right: 14px; }
+    .pastille .emoji { font-size: 96px; }
+  }
+
+  /* ============ MOUVEMENTS RÉDUITS (réglage de l'appareil) ============ */
   @media (prefers-reduced-motion: reduce) {
-    .bandeau div, .sticker .pastille { animation: none; }
+    .bandeau div, .sticker .pastille, .memoji.hop { animation: none; }
+    .adresse, .action { transition: background .2s ease; }
+    .adresse:hover, .adresse:active, .action:active { transform: none; }
   }
 </style>
 </head>
 <body>
   <header>
-    <a href="index.html">← Victoire Giroard</a>
-    <a href="index.html">Retour</a>
+    <a href="./" id="nom">← Victoire Giroard</a>
+    <a href="./">Retour au portfolio</a>
   </header>
 
   <main>
-    <p class="question">Prêt·e à travailler ensemble ?</p>
+    <p class="question" id="question">Prêt·e à travailler ensemble ?</p>
 
     <div class="bandeau" aria-hidden="true">
-      <div>Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦ Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦ Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦ Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦&nbsp;</div>
+      <div id="bandeau">Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦ Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦ Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦ Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦ </div>
     </div>
 
-    <h1>Écris-moi</h1>
-
-    <div class="liste">
-      <button class="adresse" type="button" aria-describedby="aide"
-              data-copie="victoiregrd@icloud.com" data-emoji="✉️" data-legende="mail copié">victoiregrd@icloud.com</button>
-
-      <button class="adresse" type="button" aria-describedby="aide"
-              data-copie="https://www.linkedin.com/in/victoiregiroard" data-emoji="📁" data-legende="lien copié">www.linkedin.com/in/victoiregiroard</button>
-
-      <button class="adresse" type="button" aria-describedby="aide"
-              data-copie="07 49 09 39 86" data-emoji="📞" data-legende="numéro copié">07 49 09 39 86</button>
+    <div class="titre">
+      <h1 id="grand-titre">Écris-moi</h1>
+      <img class="memoji" id="memoji" src="assets/emoji/victoire-clin.png" width="308" height="428" alt="" draggable="false">
     </div>
-    <p class="aide" id="aide" aria-live="polite">Clique sur un encadré pour le copier</p>
+
+    <!-- les encadrés sont fabriqués par le script en bas de page, depuis content/infos.json -->
+    <div class="liste" id="liste" aria-busy="true"></div>
+    <noscript><p class="vide">Active JavaScript pour afficher mes coordonnées.</p></noscript>
+    <p class="aide" id="aide" aria-live="polite" hidden>Clique sur un encadré pour le copier</p>
   </main>
 
-  <footer>© Victoire Giroard 2026</footer>
+  <footer id="pied">© Victoire Giroard 2026</footer>
 
 <script>
-  // Son « pop » généré directement (aucun fichier à ajouter)
+(() => {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const liste = $('liste'), aide = $('aide'), memoji = $('memoji');
+  const reduit = matchMedia('(prefers-reduced-motion: reduce)');
+  const AIDE_INITIALE = (matchMedia('(hover: none)').matches ? 'Touche' : 'Clique sur') + ' un encadré pour le copier';
+
+  /* ---------- son « pop » généré directement (aucun fichier à ajouter) ---------- */
   let audio;
   function pop() {
     try {
       audio = audio || new (window.AudioContext || window.webkitAudioContext)();
       if (audio.state === 'suspended') audio.resume();
-      const t = audio.currentTime;
-      const osc = audio.createOscillator();
-      const gain = audio.createGain();
+      const t = audio.currentTime, osc = audio.createOscillator(), gain = audio.createGain();
       osc.type = 'sine';
       osc.frequency.setValueAtTime(700, t);
       osc.frequency.exponentialRampToValueAtTime(180, t + 0.12);
@@ -157,77 +292,163 @@
       gain.gain.exponentialRampToValueAtTime(0.5, t + 0.01);
       gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.15);
       osc.connect(gain).connect(audio.destination);
-      osc.start(t);
-      osc.stop(t + 0.16);
+      osc.start(t); osc.stop(t + 0.16);
     } catch (e) { /* pas de son possible, on ignore */ }
   }
 
-  const encadres = document.querySelectorAll('.adresse');
-  const aide = document.getElementById('aide');
-  const AIDE_INITIALE = aide.textContent;
-  let minuteur;
-
+  /* ---------- copie dans le presse-papiers (avec une solution de secours) ---------- */
   async function copier(texte) {
-    try {
-      await navigator.clipboard.writeText(texte);
-    } catch (e) {
-      const zone = document.createElement('textarea');
-      zone.value = texte;
-      zone.style.cssText = 'position:fixed;opacity:0';
-      document.body.appendChild(zone);
-      zone.select();
-      document.execCommand('copy');
-      zone.remove();
-    }
+    try { await navigator.clipboard.writeText(texte); return true; } catch (e) { /* on tente l'ancienne méthode */ }
+    const zone = document.createElement('textarea');
+    zone.value = texte; zone.setAttribute('readonly', '');
+    zone.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(zone); zone.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    zone.remove();
+    return ok;
   }
 
-  // Un seul sticker à la fois : le précédent se décolle
+  /* ---------- sticker collé à l'endroit du clic (un seul à la fois) ---------- */
+  let minuteur;
   function coller(x, y, emoji, legende) {
-    document.querySelectorAll('.sticker').forEach(el => el.remove());
-
+    document.querySelectorAll('.sticker').forEach((el) => el.remove());
     const sticker = document.createElement('div');
-    sticker.className = 'sticker';
-    sticker.style.left = x + 'px';
-    sticker.style.top = y + 'px';
+    sticker.className = 'sticker'; sticker.setAttribute('aria-hidden', 'true');
+    // reste dans l'écran même si on clique tout au bord
+    sticker.style.left = Math.min(Math.max(x, 90), innerWidth - 90) + 'px';
+    sticker.style.top = Math.min(Math.max(y, 70), innerHeight - 70) + 'px';
     sticker.style.setProperty('--rot', (Math.random() * 20 - 10).toFixed(1) + 'deg');
-
-    const pastille = document.createElement('span');
-    pastille.className = 'pastille';
-    const e = document.createElement('span');
-    e.className = 'emoji';
-    e.setAttribute('aria-hidden', 'true');
-    e.textContent = emoji;
-    const l = document.createElement('span');
-    l.className = 'legende';
-    l.textContent = legende;
-    pastille.append(e, l);
-    sticker.appendChild(pastille);
-    document.body.appendChild(sticker);
+    const pastille = document.createElement('span'); pastille.className = 'pastille';
+    const e = document.createElement('span'); e.className = 'emoji'; e.textContent = emoji;
+    const l = document.createElement('span'); l.className = 'legende'; l.textContent = legende;
+    pastille.append(e, l); sticker.appendChild(pastille); document.body.appendChild(sticker);
+    return sticker;
   }
 
-  encadres.forEach(bouton => {
-    bouton.addEventListener('click', async (ev) => {
-      // Position de la souris ; au clavier (pas de souris), on prend le centre de l'encadré
-      let x = ev.clientX, y = ev.clientY;
-      if (ev.detail === 0) {
-        const r = bouton.getBoundingClientRect();
-        x = r.left + r.width / 2;
-        y = r.top + r.height / 2;
-      }
-      coller(x, y, bouton.dataset.emoji, bouton.dataset.legende);
-      pop();
+  /* ---------- coordonnées : même règle que le reste du site ---------- */
+  const texte = (v) => String(v == null ? '' : v).trim();
+  // « @pseudo », « pseudo », adresse sans https ou lien complet acceptés
+  const lien = (v, site) => {
+    v = texte(v); if (!v) return '';
+    if (/^https?:\/\//i.test(v)) return v;
+    if (/^[\w.-]+\.[a-z]{2,}\//i.test(v)) return 'https://' + v;
+    return site + v.replace(/^@/, '') + '/';
+  };
+  const sansHttp = (u) => u.replace(/^https?:\/\//i, '').replace(/\/+$/, '');
+  // 06 12 34 56 78 -> +33612345678 ; un numéro déjà en +.. est gardé
+  const tel = (v) => {
+    let n = v.replace(/[^\d+]/g, '');
+    if (/^0\d{9}$/.test(n)) n = '+33' + n.slice(1);
+    return n;
+  };
 
-      await copier(bouton.dataset.copie);
-      encadres.forEach(b => b.classList.remove('copie'));
-      bouton.classList.add('copie');
-      aide.textContent = 'Copié ✓';
-      clearTimeout(minuteur);
-      minuteur = setTimeout(() => {
-        bouton.classList.remove('copie');
-        aide.textContent = AIDE_INITIALE;
-      }, 2000);
-    });
-  });
+  function encadres(contact) {
+    const email = texte(contact.email).replace(/^mailto:/i, '');
+    const linkedin = lien(contact.linkedin, 'https://www.linkedin.com/in/');
+    const instagram = lien(contact.instagram, 'https://www.instagram.com/');
+    const telephone = texte(contact.telephone);
+    const out = [];
+    if (email) out.push({ voir: email, copie: email, quoi: 'l’adresse e-mail', ok: 'Adresse e-mail copiée ✓',
+      emoji: '✉️', legende: 'mail copié', action: 'écrire ✉', href: 'mailto:' + email, nomAction: 'Écrire un e-mail à ' + email });
+    if (linkedin) out.push({ voir: sansHttp(linkedin), copie: linkedin, quoi: 'le lien LinkedIn', ok: 'Lien LinkedIn copié ✓',
+      emoji: '📁', legende: 'lien copié', action: 'ouvrir ↗', href: linkedin, externe: true, nomAction: 'Ouvrir mon profil LinkedIn (nouvel onglet)' });
+    if (instagram) {
+      const m = instagram.match(/instagram\.com\/([^/?#]+)/i);
+      out.push({ voir: m ? '@' + m[1] : sansHttp(instagram), copie: instagram, quoi: 'le lien Instagram', ok: 'Lien Instagram copié ✓',
+        emoji: '📸', legende: 'lien copié', action: 'ouvrir ↗', href: instagram, externe: true, nomAction: 'Ouvrir mon Instagram (nouvel onglet)' });
+    }
+    if (telephone && tel(telephone).replace('+', '').length >= 6) out.push({ voir: telephone, copie: telephone, quoi: 'le numéro de téléphone', ok: 'Numéro copié ✓',
+      emoji: '📞', legende: 'numéro copié', action: 'appeler ☎', href: 'tel:' + tel(telephone), nomAction: 'Appeler le ' + telephone });
+    return out;
+  }
+
+  function afficher(infos) {
+    const contact = (infos.contact && typeof infos.contact === 'object') ? infos.contact : {};
+    const nom = texte(infos.nom) || 'Victoire Giroard';
+    $('nom').textContent = '← ' + nom;
+    const annee = texte(infos.annee);
+    $('pied').textContent = '© ' + nom + (annee ? ' ' + annee : '');
+    if (texte(contact.titre)) $('question').textContent = texte(contact.titre);
+    if (texte(contact.grandTitre)) $('grand-titre').textContent = texte(contact.grandTitre);
+    if (texte(contact.bandeau)) bandeau(texte(contact.bandeau));
+
+    liste.textContent = '';
+    const items = encadres(contact);
+    if (!items.length) {
+      const p = document.createElement('p'); p.className = 'vide';
+      p.textContent = texte(contact.texteSiVide) || 'Les coordonnées arrivent bientôt ✿';
+      liste.appendChild(p); aide.hidden = true; return;
+    }
+    for (const it of items) {
+      const carte = document.createElement('div'); carte.className = 'carte';
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'adresse'; b.textContent = it.voir;
+      b.setAttribute('aria-label', 'Copier ' + it.quoi + ' : ' + it.voir);
+      b.setAttribute('aria-describedby', 'aide');
+      b.addEventListener('click', (ev) => clic(ev, b, it));
+      const a = document.createElement('a');
+      a.className = 'action'; a.href = it.href; a.textContent = it.action; a.setAttribute('aria-label', it.nomAction);
+      if (it.externe) { a.target = '_blank'; a.rel = 'noopener'; }
+      carte.append(b, a); liste.appendChild(carte);
+    }
+    aide.hidden = false; aide.textContent = AIDE_INITIALE;
+  }
+
+  async function clic(ev, bouton, it) {
+    // position de la souris ; au clavier (pas de souris), le centre de l'encadré
+    let x = ev.clientX, y = ev.clientY;
+    if (ev.detail === 0 || (!x && !y)) { const r = bouton.getBoundingClientRect(); x = r.left + r.width / 2; y = r.top + r.height / 2; }
+    const ok = await copier(it.copie);
+    clearTimeout(minuteur);
+    liste.querySelectorAll('.adresse').forEach((b) => b.classList.remove('copie'));
+    if (!ok) {
+      aide.classList.remove('ok');
+      aide.textContent = 'Oups, la copie n’a pas marché ici : recopie ' + it.quoi + ' à la main.';
+      return;
+    }
+    const sticker = coller(x, y, it.emoji, it.legende);
+    pop();
+    bouton.classList.add('copie');
+    aide.textContent = it.ok; aide.classList.add('ok');
+    if (!reduit.matches) { memoji.classList.remove('hop'); void memoji.offsetWidth; memoji.classList.add('hop'); }
+    minuteur = setTimeout(() => {
+      bouton.classList.remove('copie');
+      aide.textContent = AIDE_INITIALE; aide.classList.remove('ok');
+      if (reduit.matches) sticker.remove();
+      else { sticker.classList.add('part'); setTimeout(() => sticker.remove(), 320); }
+    }, 2000);
+  }
+
+  /* ---------- bandeau : phrase répétée pour remplir l'écran, puis doublée (boucle sans saut) ---------- */
+  const bande = $('bandeau');
+  let phrase = "Prête à rejoindre votre équipe ✦ En recherche d'alternance";
+  // vitesse du dessin d'origine : 18 s pour 2 fois la phrase par défaut
+  let pxParSeconde = 0;
+  function bandeau(p) {
+    if (p) phrase = p;
+    const morceau = phrase.replace(/\s*✦\s*$/, '') + ' ✦ ';
+    if (!pxParSeconde) {
+      bande.textContent = "Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦ ";
+      pxParSeconde = bande.getBoundingClientRect().width * 2 / 18;
+    }
+    const em = parseFloat(getComputedStyle(bande).fontSize) || 16;
+    bande.textContent = morceau;
+    const w = bande.getBoundingClientRect().width || 1;
+    const n = Math.max(1, Math.ceil(document.documentElement.clientWidth / w));
+    bande.textContent = morceau.repeat(n * 2);
+    bande.style.setProperty('--duree', Math.max(4, (n * w) / (pxParSeconde || em * 4)).toFixed(2) + 's');
+  }
+  bandeau();
+  let taille = innerWidth;
+  addEventListener('resize', () => { if (innerWidth !== taille) { taille = innerWidth; pxParSeconde = 0; bandeau(); } });
+
+  /* ---------- lecture de content/infos.json ---------- */
+  fetch('content/infos.json', { cache: 'no-cache' })
+    .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .catch(() => ({}))
+    .then((infos) => { afficher(infos && typeof infos === 'object' ? infos : {}); liste.removeAttribute('aria-busy'); });
+})();
 </script>
 </body>
 </html>

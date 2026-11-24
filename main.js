@@ -956,9 +956,9 @@ window.addEventListener('popstate', (e) => {
   else if (projetCourant) fermer();
 });
 
-/* ---------------------------------------------------------------- PANNEAUX : liste et contact */
-const panneaux = { liste: $('#liste'), contact: $('#contact') };
-const boutonsPanneaux = { liste: $('#btn-liste'), contact: $('#btn-contact') };
+/* ---------------------------------------------------------------- PANNEAU : liste des projets (le contact est une page à part : contact.html) */
+const panneaux = { liste: $('#liste') };
+const boutonsPanneaux = { liste: $('#btn-liste') };
 function ouvrirPanneau(nom) {
   const p = panneaux[nom], deja = !p.hidden;
   fermerPanneaux(false);
@@ -973,8 +973,6 @@ function fermerPanneaux(rendreFocus = true) {
   }
 }
 boutonsPanneaux.liste.addEventListener('click', () => ouvrirPanneau('liste'));
-boutonsPanneaux.contact.addEventListener('click', () => ouvrirPanneau('contact'));
-$$('[data-ouvrir-contact]').forEach((b) => b.addEventListener('click', () => ouvrirPanneau('contact')));
 $$('[data-fermer]').forEach((b) => b.addEventListener('click', () => fermerPanneaux()));
 $$('#liste a').forEach((a) => a.addEventListener('click', (e) => {
   e.preventDefault(); const id = a.dataset.projet;
@@ -983,8 +981,8 @@ $$('#liste a').forEach((a) => a.addEventListener('click', (e) => {
   else ouvrir(id);
 }));
 document.addEventListener('pointerdown', (e) => {
-  if (e.target.closest('.panneau,#btn-liste,#btn-contact,[data-ouvrir-contact]')) return;
-  if (!panneaux.liste.hidden || !panneaux.contact.hidden) fermerPanneaux(false);
+  if (e.target.closest('.panneau,#btn-liste')) return;
+  if (!panneaux.liste.hidden) fermerPanneaux(false);
 });
 // contact (rempli depuis content/infos.json) : « @pseudo » ou lien complet acceptés
 const lienContact = (v, site) => {
@@ -998,21 +996,13 @@ if (window.CONTACT) {
   window.CONTACT.linkedin = lienContact(window.CONTACT.linkedin, 'https://www.linkedin.com/in/');
   window.CONTACT.email = String(window.CONTACT.email || '').trim().replace(/^mailto:/i, '');
 }
-(() => {
-  const C = window.CONTACT || {}, z = $('#contact-liens');
-  const lien = (href, txt, ext) => { const a = document.createElement('a'); a.href = href; a.textContent = txt; if (ext) { a.target = '_blank'; a.rel = 'noopener'; } z.appendChild(a); };
-  if (C.email) lien('mailto:' + C.email, C.email);
-  if (C.instagram) lien(C.instagram, 'Instagram', true);
-  if (C.linkedin) lien(C.linkedin, 'LinkedIn', true);
-  if (!z.children.length) { const p = document.createElement('p'); p.textContent = CONTENU.contactVide || 'Les coordonnées arrivent bientôt ✿'; z.appendChild(p); }
-})();
 
 /* ---------------------------------------------------------------- CLAVIER */
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     if (vis.classList.contains('ouverte')) { fermerVisionneuse(); return; }
     if (Discussion.ouverte) { Discussion.echap(); return; }
-    if (!panneaux.liste.hidden || !panneaux.contact.hidden) { fermerPanneaux(); return; }
+    if (!panneaux.liste.hidden) { fermerPanneaux(); return; }
     if (projetCourant) { retourAccueil(); return; }
   }
   if (projetCourant || !pret || Discussion.ouverte) return;
@@ -1108,7 +1098,7 @@ const Discussion = (() => {
     } else if (m.lien) {
       b.classList.add('lien');
       const a = document.createElement('a'); a.href = m.lien; a.textContent = m.texte;
-      if (!m.lien.startsWith('mailto:')) { a.target = '_blank'; a.rel = 'noopener'; }
+      if (/^https?:/i.test(m.lien)) { a.target = '_blank'; a.rel = 'noopener'; } // liens externes seulement
       b.appendChild(a);
     } else b.textContent = m.texte || '';
     li.appendChild(b);
@@ -1145,7 +1135,9 @@ const Discussion = (() => {
         if (C.email) liens.push({ texte: '✉️ ' + C.email, lien: 'mailto:' + C.email });
         if (C.instagram) liens.push({ texte: 'Instagram ↗', lien: C.instagram });
         if (C.linkedin) liens.push({ texte: 'LinkedIn ↗', lien: C.linkedin });
-        if (liens.length) out.push(...liens);
+        if (C.telephone) liens.push({ texte: '📞 ' + C.telephone, lien: 'tel:' + C.telephone.replace(/[^\d+]/g, '').replace(/^0(\d{9})$/, '+33$1') });
+        // et la page contact (encadrés à copier), dans le même onglet
+        if (liens.length) out.push(...liens, { texte: 'ma page contact →', lien: 'contact.html' });
         else out.push(CONV.afficherACompleter ? { aCompleter: m.aCompleter || 'Tes coordonnées : e-mail, Instagram, LinkedIn (formulaire « Infos et contact »)' } : { texte: CONV.contactVide || 'bientôt ✿' });
         continue;
       }
