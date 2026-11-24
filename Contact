@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<!-- Adapte la page aux écrans de téléphone -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Victoire Giroard</title>
+
+<style>
+  /* ============ COULEURS (modifie-les ici, elles changent partout) ============ */
+  :root {
+    --fond: #ffeffc;    /* fond de la page (rose très pâle) */
+    --lilas: #d9c8f2;   /* bandeau qui défile */
+    --rose: #f6c9dc;    /* encadré quand on le survole */
+    --menthe: #bfe8d2;  /* encadré une fois copié */
+    --texte: #2b2433;   /* texte et contours */
+  }
+
+  /* ============ BASE DE LA PAGE ============ */
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    background: var(--fond);
+    color: var(--texte);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: flex; flex-direction: column;   /* en-tête, contenu, pied de page empilés */
+    min-height: 100vh;
+    overflow-x: hidden;                      /* évite le défilement horizontal du bandeau */
+  }
+
+  /* ============ EN-TÊTE (liens de retour) ============ */
+  header { display: flex; justify-content: space-between; align-items: center; padding: 20px 32px; }
+  header a { color: inherit; text-decoration: none; font-weight: 600; }
+  header a:hover { text-decoration: underline; }
+
+  /* ============ CONTENU CENTRAL ============ */
+  main {
+    flex: 1;                                  /* prend toute la place disponible */
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 24px 32px 48px;
+    max-width: 880px; width: 100%; margin: 0 auto;
+  }
+  .question { font-size: clamp(1.1rem, 2.5vw, 1.4rem); font-weight: 700; margin: 0 0 12px; }
+
+  /* ============ BANDEAU QUI DÉFILE ============ */
+  .bandeau {
+    margin: 0 -32px 32px; padding: 14px 0;    /* marge négative : le bandeau va d'un bord à l'autre */
+    background: var(--lilas);
+    border-block: 2px solid var(--texte);
+    overflow: hidden; white-space: nowrap;
+  }
+  .bandeau div {
+    display: inline-block;
+    font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 800; text-transform: uppercase; /* tout en majuscules */
+    animation: defile 18s linear infinite;    /* 18 s = vitesse (plus grand = plus lent) */
+  }
+  @keyframes defile { to { transform: translateX(-50%); } }
+
+  /* ============ GRAND TITRE ============ */
+  h1 { font-size: clamp(2.6rem, 9vw, 5.5rem); line-height: 1; margin: 0 0 32px; letter-spacing: -.02em; }
+
+  /* ============ ENCADRÉS CLIQUABLES (mail, LinkedIn, téléphone) ============ */
+  .adresse {
+    display: block; width: 100%;
+    font: inherit; font-weight: 700; text-align: left; color: var(--texte);
+    font-size: clamp(1rem, 3.4vw, 1.6rem);
+    word-break: break-all;                    /* les longs liens passent à la ligne sur mobile */
+    background: #fff;
+    border: 2px solid var(--texte); border-radius: 20px;
+    padding: 22px 24px;
+    box-shadow: 6px 6px 0
