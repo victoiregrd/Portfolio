@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Victoire Giroard</title>
+<style>
+  :root {
+    --fond: #ffeffc;
+    --lilas: #d9c8f2;
+    --rose: #f6c9dc;
+    --menthe: #bfe8d2;
+    --texte: #2b2433;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    background: var(--fond);
+    color: var(--texte);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: flex; flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  header { display: flex; justify-content: space-between; align-items: center; padding: 20px 32px; }
+  header a { color: inherit; text-decoration: none; font-weight: 600; }
+  header a:hover { text-decoration: underline; }
+
+  main {
+    flex: 1;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 24px 32px 48px;
+    max-width: 880px; width: 100%; margin: 0 auto;
+  }
+  .question { font-size: clamp(1.1rem, 2.5vw, 1.4rem); font-weight: 700; margin: 0 0 12px; }
+
+  .bandeau {
+    margin: 0 -32px 32px; padding: 14px 0;
+    background: var(--lilas);
+    border-block: 2px solid var(--texte);
+    overflow: hidden; white-space: nowrap;
+  }
+  .bandeau div {
+    display: inline-block;
+    font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 800; text-transform: uppercase;
+    animation: defile 18s linear infinite;
+  }
+  @keyframes defile { to { transform: translateX(-50%); } }
+
+  h1 { font-size: clamp(2.6rem, 9vw, 5.5rem); line-height: 1; margin: 0 0 32px; letter-spacing: -.02em; }
+
+  /* L'adresse e-mail est elle-même le bouton */
+  .adresse {
+    display: block; width: 100%;
+    font: inherit; font-weight: 700; text-align: left; color: var(--texte);
+    font-size: clamp(1rem, 3.4vw, 1.6rem);
+    word-break: break-all;
+    background: #fff;
+    border: 2px solid var(--texte); border-radius: 20px;
+    padding: 22px 24px;
+    box-shadow: 6px 6px 0 var(--texte);
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease, background .2s ease;
+  }
+  .adresse:hover { background: var(--rose); transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--texte); }
+  .adresse:active { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--texte); }
+  .adresse:focus-visible { outline: 3px solid var(--texte); outline-offset: 4px; }
+  .adresse.copie { background: var(--menthe); }
+
+  .liste { display: flex; flex-direction: column; gap: 22px; }
+  .aide { margin: 24px 4px 0; font-size: .95rem; opacity: .7; min-height: 1.4em; }
+
+  footer { padding: 20px 32px; font-size: .85rem; opacity: .7; }
+
+  /* Sticker collé au clic */
+  .sticker {
+    position: fixed; z-index: 10;
+    width: 0; height: 0;
+    pointer-events: none;
+  }
+  .sticker .pastille {
+    position: absolute; left: 0; top: 0;
+    display: block; text-align: center; white-space: nowrap;
+    transform: translate(-50%, -50%) rotate(var(--rot)) scale(1);
+    /* contour blanc façon autocollant + ombre */
+    filter:
+      drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff)
+      drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff)
+      drop-shadow(0 5px 7px rgba(43, 36, 51, .3));
+    animation: colle .35s cubic-bezier(.3, 1.6, .5, 1) both;
+  }
+  .pastille .emoji { display: block; font-size: 120px; line-height: 1; }
+  .pastille .legende {
+    position: absolute; left: 50%; top: 58%;
+    transform: translate(-50%, -50%) rotate(-6deg);
+    background: #fff; color: #2b2433;
+    border: 3px solid #2b2433; border-radius: 10px;
+    padding: 4px 12px;
+    font-family: "Comic Sans MS", "Marker Felt", "Chalkboard SE", cursive, sans-serif;
+    font-size: 22px; font-weight: 700; line-height: 1.1;
+  }
+  @keyframes colle {
+    from { transform: translate(-50%, -50%) rotate(calc(var(--rot) - 25deg)) scale(2.2); opacity: 0; }
+    to   { transform: translate(-50%, -50%) rotate(var(--rot)) scale(1); opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bandeau div, .sticker .pastille { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Victoire Giroard</a>
+    <a href="index.html">Retour</a>
+  </header>
+
+  <main>
+    <p class="question">Prêt·e à travailler ensemble ?</p>
+
+    <div class="bandeau" aria-hidden="true">
+      <div>Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦ Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦ Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦ Prête à rejoindre votre équipe ✦ En recherche d'alternance ✦&nbsp;</div>
+    </div>
+
+    <h1>Écris-moi</h1>
+
+    <div class="liste">
+      <button class="adresse" type="button" aria-describedby="aide"
+              data-copie="victoiregrd@icloud.com" data-emoji="✉️" data-legende="mail copié">victoiregrd@icloud.com</button>
+
+      <button class="adresse" type="button" aria-describedby="aide"
+              data-copie="https://www.linkedin.com/in/victoiregiroard" data-emoji="📁" data-legende="lien copié">www.linkedin.com/in/victoiregiroard</button>
+
+      <button class="adresse" type="button" aria-describedby="aide"
+              data-copie="07 49 09 39 86" data-emoji="📞" data-legende="numéro copié">07 49 09 39 86</button>
+    </div>
+    <p class="aide" id="aide" aria-live="polite">Clique sur un encadré pour le copier</p>
+  </main>
+
+  <footer>© Victoire Giroard 2026</footer>
+
+<script>
+  // Son « pop » généré directement (aucun fichier à ajouter)
+  let audio;
+  function pop() {
+    try {
+      audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+      if (audio.state === 'suspended') audio.resume();
+      const t = audio.currentTime;
+      const osc = audio.createOscillator();
+      const gain = audio.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(700, t);
+      osc.frequency.exponentialRampToValueAtTime(180, t + 0.12);
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.exponentialRampToValueAtTime(0.5, t + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.15);
+      osc.connect(gain).connect(audio.destination);
+      osc.start(t);
+      osc.stop(t + 0.16);
+    } catch (e) { /* pas de son possible, on ignore */ }
+  }
+
+  const encadres = document.querySelectorAll('.adresse');
+  const aide = document.getElementById('aide');
+  const AIDE_INITIALE = aide.textContent;
+  let minuteur;
+
+  async function copier(texte) {
+    try {
+      await navigator.clipboard.writeText(texte);
+    } catch (e) {
+      const zone = document.createElement('textarea');
+      zone.value = texte;
+      zone.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(zone);
+      zone.select();
+      document.execCommand('copy');
+      zone.remove();
+    }
+  }
+
+  // Un seul sticker à la fois : le précédent se décolle
+  function coller(x, y, emoji, legende) {
+    document.querySelectorAll('.sticker').forEach(el => el.remove());
+
+    const sticker = document.createElement('div');
+    sticker.className = 'sticker';
+    sticker.style.left = x + 'px';
+    sticker.style.top = y + 'px';
+    sticker.style.setProperty('--rot', (Math.random() * 20 - 10).toFixed(1) + 'deg');
+
+    const pastille = document.createElement('span');
+    pastille.className = 'pastille';
+    const e = document.createElement('span');
+    e.className = 'emoji';
+    e.setAttribute('aria-hidden', 'true');
+    e.textContent = emoji;
+    const l = document.createElement('span');
+    l.className = 'legende';
+    l.textContent = legende;
+    pastille.append(e, l);
+    sticker.appendChild(pastille);
+    document.body.appendChild(sticker);
+  }
+
+  encadres.forEach(bouton => {
+    bouton.addEventListener('click', async (ev) => {
+      // Position de la souris ; au clavier (pas de souris), on prend le centre de l'encadré
+      let x = ev.clientX, y = ev.clientY;
+      if (ev.detail === 0) {
+        const r = bouton.getBoundingClientRect();
+        x = r.left + r.width / 2;
+        y = r.top + r.height / 2;
+      }
+      coller(x, y, bouton.dataset.emoji, bouton.dataset.legende);
+      pop();
+
+      await copier(bouton.dataset.copie);
+      encadres.forEach(b => b.classList.remove('copie'));
+      bouton.classList.add('copie');
+      aide.textContent = 'Copié ✓';
+      clearTimeout(minuteur);
+      minuteur = setTimeout(() => {
+        bouton.classList.remove('copie');
+        aide.textContent = AIDE_INITIALE;
+      }, 2000);
+    });
+  });
+</script>
+</body>
+</html>
