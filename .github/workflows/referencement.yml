@@ -1,5 +1,5 @@
 # Référencement Google : après chaque enregistrement dans Pages CMS (fichiers content/),
-# recopie le nom, la description et la liste des projets dans index.html et sitemap.xml,
+# recopie le nom, la description et la liste des projets dans index.html, contact.html (en-tête) et sitemap.xml,
 # puis republie le site. Ne touche à rien d'autre.
 # - pas de boucle : le commit fait ici ne modifie pas content/ et un push fait avec
 #   GITHUB_TOKEN ne relance jamais d'Action ;
@@ -31,7 +31,7 @@ jobs:
         run: |
           git clone --depth 20 --branch main "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" site
 
-      - name: Recopier le contenu dans index.html et sitemap.xml
+      - name: Recopier le contenu dans index.html, contact.html et sitemap.xml
         working-directory: site
         run: python3 .github/seo/generer.py .
 
@@ -39,11 +39,12 @@ jobs:
         id: commit
         working-directory: site
         run: |
-          if [ -z "$(git status --porcelain -- index.html sitemap.xml)" ]; then echo "Rien à changer."; exit 0; fi
+          if [ -z "$(git status --porcelain -- index.html contact.html sitemap.xml)" ]; then echo "Rien à changer."; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html sitemap.xml
-          git commit -m "Référencement : index.html et sitemap.xml mis à jour depuis content/"
+          git add -- index.html sitemap.xml
+          if [ -f contact.html ]; then git add -- contact.html; fi
+          git commit -m "Référencement : index.html, contact.html et sitemap.xml mis à jour depuis content/"
           for essai in 1 2 3; do
             if git push origin HEAD:main; then echo "pousse=oui" >> "$GITHUB_OUTPUT"; exit 0; fi
             sleep 5; git pull --rebase --depth 20 origin main
