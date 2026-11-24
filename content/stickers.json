@@ -60,6 +60,14 @@
       "finition": "brillant",
       "taille": 1,
       "son": "pop"
+    },
+    {
+      "nom": "logiciels",
+      "image": "assets/uploads/180.jpg",
+      "id": "logiciels",
+      "finition": "brillant",
+      "taille": 1,
+      "son": "pop"
     }
   ],
   "maxStickers": 36
