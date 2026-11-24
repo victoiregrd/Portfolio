@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://victoiregrd.github.io/Portfolio/sitemap.xml

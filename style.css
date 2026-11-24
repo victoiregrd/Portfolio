@@ -78,6 +78,7 @@ body.curseur-ok .curseur{display:grid}
 /* ---------- En-tête ---------- */
 .entete{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px clamp(16px,3vw,36px) 16px clamp(16px,3vw,36px);pointer-events:none;transition:background .4s,padding .5s var(--ease)}
 .entete > *{pointer-events:auto}
+.entete-h1{display:contents;font:inherit}  /* le titre de la page (h1) ne change pas la mise en page : le lien garde sa place */
 .entete-nom{font-family:var(--serif);font-style:italic;font-size:26px;line-height:1.05;text-decoration:none;display:flex;flex-direction:column}
 .entete-nom span{font-family:var(--texte);font-style:normal;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--prune-doux)}
 .entete-nav{display:flex;align-items:center;gap:8px}

@@ -1,0 +1,58 @@
+# Référencement Google : après chaque enregistrement dans Pages CMS (fichiers content/),
+# recopie le nom, la description et la liste des projets dans index.html et sitemap.xml,
+# puis republie le site. Ne touche à rien d'autre.
+# - pas de boucle : le commit fait ici ne modifie pas content/ et un push fait avec
+#   GITHUB_TOKEN ne relance jamais d'Action ;
+# - en cas d'échec, rien n'est enregistré et le site reste en ligne tel quel.
+name: Référencement Google
+
+on:
+  push:
+    branches: [main]
+    paths: ['content/**', '.github/seo/**', '.github/workflows/referencement.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: referencement
+  cancel-in-progress: false
+
+jobs:
+  mettre-a-jour:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Récupérer le site
+        run: |
+          git clone --depth 20 --branch main "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" site
+
+      - name: Recopier le contenu dans index.html et sitemap.xml
+        working-directory: site
+        run: python3 .github/seo/generer.py .
+
+      - name: Enregistrer si quelque chose a changé
+        id: commit
+        working-directory: site
+        run: |
+          if [ -z "$(git status --porcelain -- index.html sitemap.xml)" ]; then echo "Rien à changer."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html sitemap.xml
+          git commit -m "Référencement : index.html et sitemap.xml mis à jour depuis content/"
+          for essai in 1 2 3; do
+            if git push origin HEAD:main; then echo "pousse=oui" >> "$GITHUB_OUTPUT"; exit 0; fi
+            sleep 5; git pull --rebase --depth 20 origin main
+          done
+          exit 1
+
+      - name: Republier le site
+        if: steps.commit.outputs.pousse == 'oui'
+        run: |
+          # un commit fait par une Action ne relance pas GitHub Pages tout seul : on le demande
+          curl -fsS -X POST -H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/pages/builds"

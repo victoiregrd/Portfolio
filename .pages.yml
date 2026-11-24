@@ -529,9 +529,11 @@ content:
         type: string
       - name: titreOnglet
         label: Titre dans l'onglet du navigateur et sur Google
+        description: "Commence par ton nom : c'est le titre bleu affiché par Google."
         type: string
       - name: description
         label: Phrase de présentation pour Google
+        description: "Une ou deux phrases avec ton nom et ton métier (environ 150 signes). Le site la recopie tout seul pour Google."
         type: text
       - name: emoji
         label: Petites phrases de ton émoji

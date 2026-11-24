@@ -444,7 +444,7 @@ function construire(D) {
   if (infos.description) { const m = document.querySelector('meta[name="description"]'); if (m) m.content = infos.description; }
   const meta = [infos.metier, infos.annee ? 'portfolio ' + infos.annee : 'portfolio'].filter(Boolean).join(' · ');
   document.getElementById('entete-nom').innerHTML = `${esc(nom)} <span>${esc(meta)}</span>`;
-  document.querySelector('.accueil h1').textContent = `${nom} — portfolio de design graphique`;
+  if (infos.description) document.getElementById('presentation').textContent = infos.description;
   document.querySelector('.vp-pied-bas span').textContent = infos.signature || nom;
   if (contact.titre) document.getElementById('contact-titre').textContent = contact.titre;
   const nbTxt = `${NB} projet${NB > 1 ? 's' : ''}`;
@@ -464,6 +464,11 @@ function construire(D) {
   // pages projet, avant le pied de page
   const html = sections.map((s, i) => (RENDUS[s.bloc.modele] || sectionProjet)(s, i === 0)).join('\n\n');
   document.querySelector('#vue-projet .vp-pied').insertAdjacentHTML('beforebegin', html);
+  // visuel principal de chaque projet : le nom de Victoire dans le texte alternatif (lecteurs d'écran, Google Images)
+  document.querySelectorAll('#vue-projet > section').forEach((sec) => {
+    const im = sec.querySelector('img[alt]:not([alt=""])');
+    if (im && !im.alt.includes(nom)) im.alt = `${im.alt}, par ${nom}`;
+  });
 }
 
 function lancerMain() {
