@@ -44,6 +44,14 @@
       "taille": 1,
       "son": "avion",
       "svg": "\n      <g transform=\"rotate(-18 50 50)\">\n        <path d=\"M6 64h14M2 56h12M8 72h10\" stroke=\"#BDE0FE\" stroke-width=\"3.4\" stroke-linecap=\"round\"/>\n        <path d=\"M50 48l-6-20c-1-3 1-4 4-3l14 20z\" fill=\"#CDB4F6\" stroke=\"#3B2A4A\" stroke-width=\"3\" stroke-linejoin=\"round\"/>\n        <path d=\"M22 50l-8-18c-1-3 1-5 4-4l12 14z\" fill=\"#FFD6A5\" stroke=\"#3B2A4A\" stroke-width=\"3\" stroke-linejoin=\"round\"/>\n        <path d=\"M18 46c0-6 5-9 11-9h44c10 0 22 6 22 13s-12 12-22 12H29c-6 0-11-3-11-9z\" fill=\"#BDE0FE\" stroke=\"#3B2A4A\" stroke-width=\"3.2\" stroke-linejoin=\"round\"/>\n        <path d=\"M80 41c6 1 11 4 13 8h-12c-2 0-3-1-3-3v-2c0-2 1-3 2-3z\" fill=\"#FFF8EE\" stroke=\"#3B2A4A\" stroke-width=\"2.4\" stroke-linejoin=\"round\"/>\n        <circle cx=\"38\" cy=\"48\" r=\"3.4\" fill=\"#fff\" stroke=\"#3B2A4A\" stroke-width=\"2\"/>\n        <circle cx=\"50\" cy=\"48\" r=\"3.4\" fill=\"#fff\" stroke=\"#3B2A4A\" stroke-width=\"2\"/>\n        <circle cx=\"62\" cy=\"48\" r=\"3.4\" fill=\"#fff\" stroke=\"#3B2A4A\" stroke-width=\"2\"/>\n        <path d=\"M22 56h50\" stroke=\"#FFC8DD\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n        <path d=\"M46 54L32 84c-1 3 1 4 4 3l26-31z\" fill=\"#CDB4F6\" stroke=\"#3B2A4A\" stroke-width=\"3\" stroke-linejoin=\"round\"/>\n      </g>"
+    },
+    {
+      "nom": "iced coffee",
+      "image": "assets/uploads/176-1.jpg",
+      "id": "coffee",
+      "finition": "brillant",
+      "taille": 1,
+      "son": "pop"
     }
   ],
   "maxStickers": 36
