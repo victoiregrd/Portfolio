@@ -52,6 +52,14 @@
       "finition": "brillant",
       "taille": 1,
       "son": "pop"
+    },
+    {
+      "nom": "fleurs",
+      "image": "assets/uploads/177.jpg",
+      "id": "fleur",
+      "finition": "brillant",
+      "taille": 1,
+      "son": "pop"
     }
   ],
   "maxStickers": 36
