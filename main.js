@@ -20,6 +20,10 @@ const varsCss = { fond: '--fond', lilas: '--lilas', rose: '--rose', menthe: '--m
 for (const k in varsCss) if (COUL[k]) document.documentElement.style.setProperty(varsCss[k], COUL[k]);
 const PALETTE = [COUL.lilas, COUL.rose, COUL.menthe, COUL.ciel, COUL.peche].filter(Boolean).concat('#ffffff');
 const DEFS = (window.STICKERS || []).slice(0, 8);
+// aucun sticker utilisable (liste vide ou images introuvables) : une petite étoile pour que la boule reste jouable
+const ETOILE = { id: 'etoile', nom: 'Étoile', finition: 'holo', taille: 1, son: 'pop', image: '',
+  svg: '<path d="M50 8l11 27 29 2-22 19 7 28-25-15-25 15 7-28-22-19 29-2z" fill="#FFD6A5" stroke="#3B2A4A" stroke-width="3.2" stroke-linejoin="round"/>' };
+if (!DEFS.length) DEFS.push(ETOILE);
 const MAX = Math.max(5, Math.min(80, window.MAX_STICKERS || 36));
 
 /* ---------------------------------------------------------------- SON (Web Audio, aucun fichier) */
@@ -533,13 +537,58 @@ function chargerImage(src) {
   return new Promise((ok, ko) => { const i = new Image(); i.decoding = 'async'; i.onload = () => ok(i); i.onerror = ko; i.src = src; });
 }
 function toile(T) { const c = document.createElement('canvas'); c.width = c.height = T; return c; }
+const srcSvg = (svg, T) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="${T}" height="${T}">${svg}</svg>`);
+/* image envoyée par Victoire (souvent un JPG sur fond uni, pas un PNG détouré) :
+   si les 4 coins sont opaques et de la même couleur, ce fond est retiré en partant des bords
+   (remplissage par propagation, bord adouci). Une photo sans fond uni ou un PNG déjà détouré ne bouge pas. */
+function retirerFondUni(c) {
+  const w = c.width, h = c.height, cx = c.getContext('2d');
+  let im;
+  try { im = cx.getImageData(0, 0, w, h); } catch (e) { return; } // file:// : toile « protégée », on laisse l'image telle quelle
+  const d = im.data, px = (x, y) => (y * w + x) * 4;
+  const coins = [px(0, 0), px(w - 1, 0), px(0, h - 1), px(w - 1, h - 1)];
+  if (coins.some((i) => d[i + 3] < 250)) return; // déjà transparente
+  const ref = [0, 1, 2].map((k) => coins.reduce((s, i) => s + d[i + k], 0) / 4);
+  const ecart = (i) => Math.hypot(d[i] - ref[0], d[i + 1] - ref[1], d[i + 2] - ref[2]);
+  if (coins.some((i) => ecart(i) > 40)) return; // coins de couleurs différentes : pas un fond uni
+  const TOL = 34, fond = new Uint8Array(w * h), file = new Int32Array(w * h);
+  let n = 0, lu = 0;
+  const pousser = (x, y) => { const p = y * w + x; if (!fond[p] && ecart(p * 4) <= TOL) { fond[p] = 1; file[n++] = p; } };
+  for (let x = 0; x < w; x++) { pousser(x, 0); pousser(x, h - 1); }
+  for (let y = 0; y < h; y++) { pousser(0, y); pousser(w - 1, y); }
+  while (lu < n) {
+    const p = file[lu++], x = p % w, y = (p - x) / w;
+    if (x > 0) pousser(x - 1, y); if (x < w - 1) pousser(x + 1, y);
+    if (y > 0) pousser(x, y - 1); if (y < h - 1) pousser(x, y + 1);
+  }
+  if (n > w * h * .97) return; // tout serait effacé : on garde l'image
+  for (let p = 0; p < w * h; p++) {
+    if (fond[p]) { d[p * 4 + 3] = 0; continue; }
+    const x = p % w, y = (p - x) / w;
+    const voisinFond = (x > 0 && fond[p - 1]) || (x < w - 1 && fond[p + 1]) || (y > 0 && fond[p - w]) || (y < h - 1 && fond[p + w]);
+    if (voisinFond) d[p * 4 + 3] = Math.round(d[p * 4 + 3] * Math.min(1, Math.max(.35, (ecart(p * 4) - TOL) / TOL)));
+  }
+  cx.putImageData(im, 0, 0);
+}
 async function fabriquerSticker(def, T) {
-  const src = def.image || ('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="${T}" height="${T}">${def.svg}</svg>`));
-  const img = await chargerImage(src);
   const m = T * .1, art = T - 2 * m;
   const a = toile(T), ca = a.getContext('2d');
-  ca.drawImage(img, m, m, art, art);
+  let img = null;
+  if (def.image) {
+    try { img = await chargerImage(def.image); } catch (e) { console.warn('Sticker « ' + def.nom + ' » : image introuvable (' + def.image + ')'); }
+  }
+  if (img) {
+    // image entière, sans la déformer (une image en hauteur reste en hauteur), centrée dans le carré
+    const k = Math.min(art / img.naturalWidth, art / img.naturalHeight) || 1;
+    const iw = Math.max(1, Math.round(img.naturalWidth * k)), ih = Math.max(1, Math.round(img.naturalHeight * k));
+    const t = document.createElement('canvas'); t.width = iw; t.height = ih;
+    t.getContext('2d').drawImage(img, 0, 0, iw, ih);
+    retirerFondUni(t);
+    ca.drawImage(t, m + (art - iw) / 2, m + (art - ih) / 2);
+  } else if (def.svg) {
+    ca.drawImage(await chargerImage(srcSvg(def.svg, T)), m, m, art, art);
+  } else throw new Error('sticker sans image');
   const s = toile(T), cs = s.getContext('2d'), b = T * .034;
   for (let k = 0; k < 28; k++) { const an = (k / 28) * Math.PI * 2; cs.drawImage(a, Math.cos(an) * b, Math.sin(an) * b); }
   cs.globalCompositeOperation = 'source-in'; cs.fillStyle = '#fff'; cs.fillRect(0, 0, T, T);
@@ -552,7 +601,7 @@ async function fabriquerSticker(def, T) {
 }
 function vignetteSticker(cv, def) {
   try { const p = toile(128); p.getContext('2d').drawImage(cv, 0, 0, 128, 128); return p.toDataURL('image/png'); }
-  catch (e) { return def.image || ('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -12 124 124">${def.svg}</svg>`)); }
+  catch (e) { return def.image || (def.svg ? ('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -12 124 124">${def.svg}</svg>`)) : ''); }
 }
 function construireBarre(toiles) {
   DEFS.forEach((def, i) => {
@@ -573,6 +622,21 @@ function construireBarre(toiles) {
     Emoji.dire(choix === 'auto' ? 'les stickers défilent à tour de rôle ✦' : DEFS[choix].nom + ' choisi !');
   }));
   majChoix();
+  // jusqu'à 8 stickers : la barre reste sur une ligne (boutons plus petits), et les pastilles 01…N montent si elles la touchent
+  barre.style.setProperty('--cols', Math.max(6, DEFS.length + 1));
+  barre.classList.toggle('nombreux', DEFS.length > 5);
+  placerIndex();
+  if (document.fonts) document.fonts.ready.then(placerIndex);
+  window.addEventListener('resize', () => requestAnimationFrame(placerIndex));
+}
+function placerIndex() {
+  const idx = $('.index-projets');
+  if (!idx) return;
+  idx.style.bottom = '';
+  const a = barre.getBoundingClientRect(), b = idx.getBoundingClientRect();
+  if (!a.width || !b.width) return;
+  const croise = a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+  if (croise) idx.style.bottom = Math.round(innerHeight - a.top + 10) + 'px';
 }
 
 /* version simple si la 3D n'est pas disponible : disque pastel + stickers à plat */
@@ -999,7 +1063,9 @@ const Discussion = (() => {
     }, duree);
   }
 
-  const idxSticker = (id) => DEFS.findIndex((d) => d.id === id);
+  // nom court tapé dans la conversation : comparé sans majuscules ni accents (Bélier = belier)
+  const court = (s) => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
+  const idxSticker = (id) => (court(id) ? DEFS.findIndex((d) => d.id === court(id)) : -1);
   const REACS = (CONV.reactions || []).filter((r) => r.emoji || idxSticker(r.sticker) >= 0);
   const iCoeur = Math.max(0, REACS.findIndex((r) => r.emoji === '❤️'));
   let reacs = {};
@@ -1450,7 +1516,10 @@ function attendreThree(ms) {
 }
 async function demarrer() {
   const t0 = performance.now();
-  const toiles = await Promise.all(DEFS.map((d) => fabriquerSticker(d, 512).catch(() => null)));
+  let toiles = await Promise.all(DEFS.map((d) => fabriquerSticker(d, 512).catch(() => null)));
+  // un sticker dont l'image ne se charge pas est simplement retiré (la boule 3D reste disponible)
+  for (let i = DEFS.length - 1; i >= 0; i--) if (!toiles[i]) { DEFS.splice(i, 1); toiles.splice(i, 1); }
+  if (!DEFS.length) { DEFS.push(ETOILE); toiles = [await fabriquerSticker(ETOILE, 512).catch(() => null)]; }
   construireBarre(toiles);
   let mod = null;
   try { mod = await attendreThree(10000); } catch (e) { console.warn('Three.js indisponible, version simple :', e && e.message); }
@@ -1484,12 +1553,12 @@ async function demarrer() {
     return;
   }
   // petite démonstration : 3 stickers se posent tout seuls
-  if (!reduit) [0, 2, 1].forEach((k, j) => setTimeout(() => {
+  if (!reduit) [0, 2, 1].map((k) => k % DEFS.length).forEach((k, j) => setTimeout(() => {
     if (projetCourant) return;
     const res = sphere.collerAuHasard(k, DEFS[k].taille || 1);
     if (res) { majCompteur(); eclabousser(L.cx, L.cy, 6, [L.r * .4, L.r * .9]); }
   }, 750 + j * 280));
-  if (!reduit) { iAuto = 3; majChoix(); }
+  if (!reduit) { iAuto = 3 % DEFS.length; majChoix(); }
   setTimeout(() => { if (!projetCourant) Emoji.reagir('sourire', L.mobile ? (PHRASES.accueilMobile || 'coucou ✿') : (PHRASES.accueil || 'coucou, moi c’est Victoire ✿'), 1500); }, 1800);
 }
 demarrer();

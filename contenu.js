@@ -406,11 +406,20 @@ function construire(D) {
 
   // données lues par main.js (mêmes noms qu'avant : STICKERS, CONTACT, CONVERSATION ; COULEURS vient de l'apparence)
   window.MAX_STICKERS = Number(st.maxStickers) || 36;
-  window.STICKERS = liste(st.stickers).filter((s) => s && s.id && (s.image || s.svg)).map((s) => ({
-    id: String(s.id), nom: s.nom || String(s.id), finition: s.finition === 'holo' ? 'holo' : 'brillant',
-    taille: Math.max(.5, Math.min(1.6, Number(s.taille) || 1)), son: s.son || 'pop',
-    ...(s.image ? { image: chemin(s.image) } : { svg: s.svg }),
-  }));
+  // un sticker = une image (ou le dessin d'origine) ; le « nom court » est facultatif :
+  // vide ou avec accents/espaces, il est fabriqué à partir du nom (Gâteau → gateau), sans doublon
+  const idsPris = new Set();
+  window.STICKERS = liste(st.stickers).filter((s) => s && typeof s === 'object' && (s.image || s.svg)).map((s, i) => {
+    let id = slug(s.id) || slug(s.nom) || 'sticker-' + (i + 1);
+    for (let k = 2; idsPris.has(id); k++) id = (slug(s.id) || slug(s.nom) || 'sticker') + '-' + k;
+    idsPris.add(id);
+    return {
+      id, nom: String(s.nom || s.id || 'Sticker'), finition: s.finition === 'holo' ? 'holo' : 'brillant',
+      taille: Math.max(.5, Math.min(1.6, Number(s.taille) || 1)), son: s.son || 'pop',
+      // l'image remplace le dessin ; le dessin reste en secours si l'image ne se charge pas
+      image: s.image ? chemin(s.image) : '', svg: typeof s.svg === 'string' ? s.svg : '',
+    };
+  });
   window.CONTACT = { email: (contact.email || '').trim(), instagram: (contact.instagram || '').trim(), linkedin: (contact.linkedin || '').trim() };
   window.CONVERSATION = Object.assign({ intro: [], reponses: [], reactions: [] }, conv, {
     afficherACompleter: conv.afficherACompleter === true,

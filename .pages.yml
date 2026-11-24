@@ -653,16 +653,17 @@ content:
   # ================================================================== STICKERS
   - name: stickers
     label: Mes stickers
-    description: Les stickers à coller sur la boule (8 au maximum).
+    description: "Les stickers à coller sur la boule (8 au maximum). Clique sur un sticker pour l'ouvrir. Pour en ajouter un : bouton « Add » en bas. Puis « Save » en haut à droite."
     type: file
     path: content/stickers.json
     format: json
     fields:
       - name: stickers
         label: Mes stickers (dans l'ordre de la barre)
-        description: "Pour un nouveau sticker, ajoute une image PNG détourée (fond transparent, carrée)."
+        description: "Pour un nouveau sticker : un nom et une image. Un PNG détouré est idéal, mais une image JPG sur fond uni (blanc, gris…) marche aussi : le site enlève le fond tout seul."
         type: object
         list:
+          min: 1
           max: 8
           collapsible:
             collapsed: true
@@ -670,16 +671,14 @@ content:
         fields:
           - { name: nom, label: Nom (affiché au survol), type: string, required: true }
           - name: image
-            label: Image du sticker (PNG détouré)
-            description: Remplace le dessin d'origine.
+            label: Image du sticker
+            description: "Remplace le dessin d'origine. PNG ou JPG (pas de photo HEIC d'iPhone)."
             type: image
             options: { path: assets/uploads }
           - name: id
             label: Nom court
-            description: "Sans espace ni accent (ex. disco). Sert dans la conversation."
+            description: "Facultatif, tu peux laisser vide. Un mot (ex. cookie) pour mettre ce sticker dans ta conversation."
             type: string
-            required: true
-            pattern: { regex: "^[a-z0-9-]+$", message: "Lettres minuscules, chiffres et tirets seulement" }
           - name: finition
             label: Finition
             type: select
@@ -693,7 +692,9 @@ content:
             description: "1 = normal, 0.8 = plus petit, 1.3 = plus grand"
             type: number
             default: 1
-            options: { min: 0.5, max: 1.6 }
+            # step obligatoire : sans lui, le navigateur n'accepte que 0.5 et 1.5 (pas de 1 par défaut)
+            # et le bouton Save ne fait rien, sans message (bug constaté le 24/11/2026)
+            options: { min: 0.5, max: 1.6, step: 0.05 }
           - name: son
             label: Son quand on le colle
             type: select
@@ -711,4 +712,4 @@ content:
         description: Au-delà, le plus ancien se décolle.
         type: number
         default: 36
-        options: { min: 5, max: 80 }
+        options: { min: 5, max: 80, step: 1 }
