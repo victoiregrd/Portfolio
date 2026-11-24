@@ -27,6 +27,7 @@
     },
     {
       "nom": "Boule à facettes",
+      "image": "assets/uploads/disko-sticker-1.jpg",
       "id": "disco",
       "finition": "holo",
       "taille": 1,
