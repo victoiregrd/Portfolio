@@ -2,126 +2,120 @@
   "projets": [
     {
       "modele": "classique",
-      "id": "p01",
       "titre": "Affiche de concert",
       "sousTitre": "Bruno Mars",
-      "couleur": "rose",
-      "vignette": "assets/vignettes/p01.webp",
+      "texte": "**Brief :** créer une affiche de concert sur l'artiste de notre choix, au format A3 paysage.",
       "outils": [
         "Photoshop",
         "InDesign"
       ],
       "image": "assets/img/bruno-affiche.jpg",
-      "alt": "Affiche du concert de Bruno Mars au Stade de France",
-      "boutonImage": "L'affiche",
       "imageSituation": "assets/img/bruno-metro.jpg",
-      "altSituation": "Affiche Bruno Mars dans le métro",
+      "vignette": "assets/vignettes/p01.webp",
+      "couleur": "rose",
+      "boutonImage": "L'affiche",
       "boutonSituation": "En situation",
       "portrait": false,
       "inverse": false,
-      "texte": "**Brief :** créer une affiche de concert sur l'artiste de notre choix, au format A3 paysage."
+      "alt": "Affiche du concert de Bruno Mars au Stade de France",
+      "altSituation": "Affiche Bruno Mars dans le métro",
+      "id": "p01"
     },
     {
       "modele": "avantApres",
-      "id": "p02",
       "titre": "Couverture de magazine",
       "sousTitre": "Vogue",
-      "couleur": "lilas",
-      "vignette": "assets/vignettes/p02.webp",
-      "phraseEmoji": "glisse sur la photo !",
+      "texte": "**Brief :** retoucher une photo puis la mettre en page à la manière du magazine *Vogue*.",
       "outils": [
         "Photoshop"
       ],
-      "note": "← glisse pour voir l'avant / après",
       "avant": "assets/img/vogue-avant.jpg",
-      "altAvant": "Photo d'origine, avant",
-      "etiquetteAvant": "avant",
       "apres": "assets/img/vogue-apres.jpg",
-      "altApres": "Couverture Vogue, après",
-      "etiquetteApres": "après",
-      "inverse": true,
-      "texte": "**Brief :** retoucher une photo puis la mettre en page à la manière du magazine *Vogue*.",
       "galerie": [
         {
           "image": "assets/img/vogue-mockup.jpg",
           "alt": "Maquette du magazine Vogue"
         }
-      ]
+      ],
+      "vignette": "assets/vignettes/p02.webp",
+      "couleur": "lilas",
+      "phraseEmoji": "glisse sur la photo !",
+      "note": "← glisse pour voir l'avant / après",
+      "etiquetteAvant": "avant",
+      "etiquetteApres": "après",
+      "inverse": true,
+      "altAvant": "Photo d'origine, avant",
+      "altApres": "Couverture Vogue, après",
+      "id": "p02"
     },
     {
       "modele": "classique",
-      "id": "p03",
       "titre": "Affiche publicitaire",
       "sousTitre": "Carte collection",
-      "couleur": "ciel",
-      "vignette": "assets/vignettes/p03.webp",
+      "texte": "**Brief :** créer une affiche publicitaire pour une carte bancaire de collection, sur le film ou le jeu vidéo de notre choix.",
       "outils": [
         "Photoshop",
         "InDesign"
       ],
       "image": "assets/img/mario-affiche.jpg",
-      "alt": "Affiche carte collection Mario Bros",
-      "boutonImage": "L'affiche",
       "imageSituation": "assets/img/mario-mockup.jpg",
-      "altSituation": "Affiche Mario Bros en situation",
+      "vignette": "assets/vignettes/p03.webp",
+      "couleur": "ciel",
+      "boutonImage": "L'affiche",
       "boutonSituation": "En situation",
       "portrait": true,
       "inverse": false,
-      "texte": "**Brief :** créer une affiche publicitaire pour une carte bancaire de collection, sur le film ou le jeu vidéo de notre choix."
+      "alt": "Affiche carte collection Mario Bros",
+      "altSituation": "Affiche Mario Bros en situation",
+      "id": "p03"
     },
     {
       "modele": "classique",
-      "id": "p04",
       "titre": "Affiche typographique",
       "sousTitre": "Zimoun",
-      "couleur": "menthe",
-      "vignette": "assets/vignettes/p04.webp",
+      "texte": "**Brief :** concevoir une affiche typographique sur l'artiste Zimoun pour la promotion d'une exposition à venir.\n\nZimoun est un artiste qui travaille sur le rythme, la répétition, et avec des matériaux comme le bois, le métal, l'aluminium…",
       "outils": [
         "Illustrator",
         "InDesign"
       ],
       "image": "assets/img/zimoun-affiche.jpg",
-      "alt": "Affiche typographique Zimoun",
-      "boutonImage": "L'affiche",
       "imageSituation": "assets/img/zimoun-mockup.jpg",
-      "altSituation": "Affiche Zimoun imprimée",
+      "vignette": "assets/vignettes/p04.webp",
+      "couleur": "menthe",
+      "boutonImage": "L'affiche",
       "boutonSituation": "Imprimée",
       "portrait": true,
       "inverse": true,
       "motFond": "ZIMOUN",
-      "texte": "**Brief :** concevoir une affiche typographique sur l'artiste Zimoun pour la promotion d'une exposition à venir.\n\nZimoun est un artiste qui travaille sur le rythme, la répétition, et avec des matériaux comme le bois, le métal, l'aluminium…"
+      "alt": "Affiche typographique Zimoun",
+      "altSituation": "Affiche Zimoun imprimée",
+      "id": "p04"
     },
     {
       "modele": "kaathoon",
-      "id": "p05",
       "titre": "Kaathoon",
       "v1": {
-        "id": "p05",
         "titreCarte": "Kaathoon V1",
         "sousTitre": "Identité",
-        "couleur": "peche",
-        "vignette": "assets/vignettes/p05.webp",
-        "phraseEmoji": "essaie aussi la V2 !",
-        "bouton": "V1 · élégante",
+        "texte": "**Brief :** repenser intégralement la charte graphique de Kaathoon, une marque de sauce pimentée et artisanale créée par un homme sri-lankais.\n\nDans cette version, la direction artistique s'articule autour d'un équilibre entre élégance et convivialité : un jaune solaire et dynamique, et un rouge bordeaux qui apporte une touche premium et organique.",
         "outils": [
           "Illustrator",
           "Photoshop",
           "InDesign"
         ],
         "grille": "assets/img/kaathoon1-grille.jpg",
-        "altGrille": "Kaathoon V1, planche d'identité",
         "figures": [
           {
             "image": "assets/img/kaathoon1-pots.jpg",
-            "alt": "Pots Kaathoon V1",
             "legende": "**Packaging** — motif organique en arrière-plan pour apporter du relief et de la texture ; système d'icônes (flammes) pour visualiser l'intensité du piment.",
-            "etroite": false
+            "etroite": false,
+            "alt": "Pots Kaathoon V1"
           },
           {
             "image": "assets/img/kaathoon1-logos.jpg",
-            "alt": "Logo Kaathoon V1",
             "legende": "**Logo** — illustration faite main à la craie grasse, qui met en scène le geste de la dégustation (le fait maison, l'artisanal) ; typographie manuscrite pour une note humaine et authentique.",
-            "etroite": false
+            "etroite": false,
+            "alt": "Logo Kaathoon V1"
           }
         ],
         "bandes": [
@@ -130,35 +124,35 @@
             "alt": "Étiquette Kaathoon V1 à plat"
           }
         ],
-        "texte": "**Brief :** repenser intégralement la charte graphique de Kaathoon, une marque de sauce pimentée et artisanale créée par un homme sri-lankais.\n\nDans cette version, la direction artistique s'articule autour d'un équilibre entre élégance et convivialité : un jaune solaire et dynamique, et un rouge bordeaux qui apporte une touche premium et organique."
+        "vignette": "assets/vignettes/p05.webp",
+        "couleur": "peche",
+        "phraseEmoji": "essaie aussi la V2 !",
+        "bouton": "V1 · élégante",
+        "altGrille": "Kaathoon V1, planche d'identité",
+        "id": "p05"
       },
       "v2": {
-        "id": "p06",
         "titreCarte": "Kaathoon V2",
         "sousTitre": "Pop art",
-        "couleur": "rose",
-        "vignette": "assets/vignettes/p06.webp",
-        "phraseEmoji": "version pop art ✦",
-        "bouton": "V2 · pop art",
+        "texte": "Cette deuxième version s'inspire du Pop Art et du **masque de feu**, un totem sri-lankais.\n\nL'univers repose sur une palette de couleurs vives et contrastées : le rouge piment et le jaune électrique sont les couleurs principales.",
         "outils": [
           "Photoshop",
           "InDesign",
           "Illustrator"
         ],
         "grille": "assets/img/kaathoon2-grille.jpg",
-        "altGrille": "Kaathoon V2, planche d'identité",
         "figures": [
           {
             "image": "assets/img/kaathoon2-pots.jpg",
-            "alt": "Pots Kaathoon V2",
             "legende": "**Packaging** — le bleu-gris en bordure calme la vibration entre le rouge et le jaune et rend lisibles la liste des ingrédients et le bloc nutritionnel.",
-            "etroite": false
+            "etroite": false,
+            "alt": "Pots Kaathoon V2"
           },
           {
             "image": "assets/img/kaathoon2-masque.jpg",
-            "alt": "Logo masque de feu Kaathoon V2",
             "legende": "**Logo** — réinterprétation du masque de feu : la langue tirée et les pointes affûtées évoquent la chaleur et l'explosion de saveurs.",
-            "etroite": true
+            "etroite": true,
+            "alt": "Logo masque de feu Kaathoon V2"
           }
         ],
         "bandes": [
@@ -171,17 +165,20 @@
             "alt": "Étiquettes Kaathoon V2 à plat"
           }
         ],
-        "texte": "Cette deuxième version s'inspire du Pop Art et du **masque de feu**, un totem sri-lankais.\n\nL'univers repose sur une palette de couleurs vives et contrastées : le rouge piment et le jaune électrique sont les couleurs principales."
-      }
+        "vignette": "assets/vignettes/p06.webp",
+        "couleur": "rose",
+        "phraseEmoji": "version pop art ✦",
+        "bouton": "V2 · pop art",
+        "altGrille": "Kaathoon V2, planche d'identité",
+        "id": "p06"
+      },
+      "id": "p05"
     },
     {
       "modele": "klear",
-      "id": "p07",
       "titre": "Klear",
       "sousTitre": "Concept éco",
-      "couleur": "ciel",
-      "vignette": "assets/vignettes/p07.webp",
-      "phraseEmoji": "regarde les bulles !",
+      "texte": "**Brief :** créer un concept axé sur l'écologie et la préservation de l'eau.\n\nJ'ai conçu Klear : une gourde innovante qui rend n'importe quelle eau potable instantanément grâce à une double filtration (filtre mécanique et pastille purificatrice).\n\n**Le K** : le potassium, molécule présente dans l'eau, présenté comme une case du tableau périodique avec l'année de création de la marque. Logo décliné en S, M et L.",
       "outils": [
         "Illustrator",
         "InDesign",
@@ -189,47 +186,44 @@
         "Procreate"
       ],
       "image": "assets/img/klear-logo.jpg",
-      "alt": "Logo Klear et déclinaisons",
-      "inverse": false,
-      "texte": "**Brief :** créer un concept axé sur l'écologie et la préservation de l'eau.\n\nJ'ai conçu Klear : une gourde innovante qui rend n'importe quelle eau potable instantanément grâce à une double filtration (filtre mécanique et pastille purificatrice).\n\n**Le K** : le potassium, molécule présente dans l'eau, présenté comme une case du tableau périodique avec l'année de création de la marque. Logo décliné en S, M et L.",
       "galerie": [
         {
           "image": "assets/img/klear-gourde.jpg",
           "alt": "Gourde Klear, filtre et packaging des pastilles"
         }
-      ]
+      ],
+      "vignette": "assets/vignettes/p07.webp",
+      "couleur": "ciel",
+      "phraseEmoji": "regarde les bulles !",
+      "inverse": false,
+      "alt": "Logo Klear et déclinaisons",
+      "id": "p07"
     },
     {
       "modele": "allumettes",
-      "id": "p08",
       "titre": "Packaging",
       "sousTitre": "Boîte d'allumettes",
-      "couleur": "peche",
-      "vignette": "assets/vignettes/p08.webp",
-      "phraseEmoji": "frotte l'image, ça craque !",
+      "texte": "**Brief :** concevoir une boîte d'allumettes pour le restaurant de notre choix en reprenant l'identité visuelle de la marque.\n\n**Patrons** : les mascottes revisitées avec des allumettes à la place de la paille et des frites ; le menu du fast-food caché dans le tiroir.",
       "outils": [
         "Illustrator"
       ],
-      "note": "frotte l'image pour l'allumer ✦",
       "image": "assets/img/allumettes-photos.jpg",
-      "alt": "Boîte d'allumettes, photos",
-      "inverse": true,
-      "texte": "**Brief :** concevoir une boîte d'allumettes pour le restaurant de notre choix en reprenant l'identité visuelle de la marque.\n\n**Patrons** : les mascottes revisitées avec des allumettes à la place de la paille et des frites ; le menu du fast-food caché dans le tiroir.",
       "galerie": [
         {
-          "image": "assets/img/allumettes-patrons.jpg",
           "alt": "Patrons de la boîte d'allumettes"
         }
-      ]
+      ],
+      "vignette": "assets/vignettes/p08.webp",
+      "couleur": "peche",
+      "inverse": true,
+      "alt": "Boîte d'allumettes, photos",
+      "id": "p08"
     },
     {
       "modele": "aparte",
-      "id": "p09",
       "titre": "Aparté",
       "sousTitre": "Chocolat",
-      "couleur": "lilas",
-      "vignette": "assets/vignettes/p09.webp",
-      "phraseEmoji": "choisis ta saveur ♡",
+      "texte": "**Brief :** imaginer et concevoir l'identité visuelle et les supports de communication d'une marque de chocolat fictive.\n\n**Mon concept :** une tablette qui allie détente et créativité, par ses ingrédients relaxants et son packaging qui révèle un mandala à l'ouverture : un concept d'art-thérapie.",
       "outils": [
         "Illustrator",
         "InDesign",
@@ -237,58 +231,61 @@
         "Procreate"
       ],
       "logo": "assets/img/aparte-logos.jpg",
-      "altLogo": "Logo Aparté",
       "saveurs": [
         {
           "nom": "Chocolat noir 70 %",
-          "couleur": "#F08DB0",
           "tablette": "assets/img/aparte-mockup-1.jpg",
-          "altTablette": "Tablette Aparté, chocolat noir 70 %",
           "patron": "assets/img/aparte-patron-1.jpg",
+          "couleur": "#F08DB0",
+          "altTablette": "Tablette Aparté, chocolat noir 70 %",
           "altPatron": "Patron du packaging, chocolat noir"
         },
         {
           "nom": "Camomille",
-          "couleur": "#FFC48A",
           "tablette": "assets/img/aparte-mockup-2.jpg",
-          "altTablette": "Tablette Aparté, camomille",
           "patron": "assets/img/aparte-patron-2.jpg",
+          "couleur": "#FFC48A",
+          "altTablette": "Tablette Aparté, camomille",
           "altPatron": "Patron du packaging, camomille"
         },
         {
           "nom": "Cardamome",
-          "couleur": "#8FD3B8",
           "tablette": "assets/img/aparte-mockup-3.jpg",
-          "altTablette": "Tablette Aparté, cardamome",
           "patron": "assets/img/aparte-patron-3.jpg",
+          "couleur": "#8FD3B8",
+          "altTablette": "Tablette Aparté, cardamome",
           "altPatron": "Patron du packaging, cardamome"
         }
       ],
       "publicite": [
         {
           "image": "assets/img/aparte-affiche.jpg",
-          "alt": "Affiche Aparté : L'art de se détendre",
-          "legende": "Publicité — « L'art de se détendre. »"
+          "legende": "Publicité — « L'art de se détendre. »",
+          "alt": "Affiche Aparté : L'art de se détendre"
         },
         {
           "image": "assets/img/aparte-metro.jpg",
-          "alt": "Affiche Aparté dans le métro",
-          "legende": "En situation"
+          "legende": "En situation",
+          "alt": "Affiche Aparté dans le métro"
         }
       ],
       "papeterie": [
         {
           "image": "assets/img/aparte-lettre.jpg",
-          "alt": "Papier à en-tête Aparté",
-          "legende": "Papeterie"
+          "legende": "Papeterie",
+          "alt": "Papier à en-tête Aparté"
         },
         {
           "image": "assets/img/aparte-cartes.jpg",
-          "alt": "Cartes de visite Aparté",
-          "legende": "Cartes de visite"
+          "legende": "Cartes de visite",
+          "alt": "Cartes de visite Aparté"
         }
       ],
-      "texte": "**Brief :** imaginer et concevoir l'identité visuelle et les supports de communication d'une marque de chocolat fictive.\n\n**Mon concept :** une tablette qui allie détente et créativité, par ses ingrédients relaxants et son packaging qui révèle un mandala à l'ouverture : un concept d'art-thérapie."
+      "vignette": "assets/vignettes/p09.webp",
+      "couleur": "lilas",
+      "phraseEmoji": "choisis ta saveur ♡",
+      "altLogo": "Logo Aparté",
+      "id": "p09"
     }
   ]
 }
