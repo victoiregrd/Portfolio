@@ -1,21 +1,5 @@
 {
-  "ambiance": "pastel",
-  "couleurs": {
-    "fond": "",
-    "texte": "",
-    "texteDoux": "",
-    "accent": "",
-    "accent2": "",
-    "boule": "",
-    "refletBoule": "",
-    "lilas": "",
-    "rose": "",
-    "menthe": "",
-    "ciel": "",
-    "peche": "",
-    "panneaux": "",
-    "boutons": ""
-  },
+  "ambiance": "bordeaux",
   "polices": {
     "titres": "anton",
     "elegante": "instrument",
